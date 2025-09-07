@@ -1,6 +1,11 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Global custom cursor */
+* {
+  cursor: none !important;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

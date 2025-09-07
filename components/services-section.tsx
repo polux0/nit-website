@@ -93,6 +93,7 @@ export default function ServicesSection() {
     setIsClient(true)
   }, [])
 
+
   const handleScrollToServices = () => {
     setShowServices(true)
     const servicesElement = document.getElementById("services")
@@ -106,9 +107,9 @@ export default function ServicesSection() {
       {/* Thread animation - positioned fixed to follow scroll */}
       <div className="fixed left-1/2 top-0 z-10" style={{ transform: "translateX(-50%)" }}>
         <svg
-          width="200"
-          height={isClient && showServices ? Math.min((scrollY - window.innerHeight * 0.8) * 0.4, window.innerHeight * 1.5) : 0}
-          className="transition-all duration-1000 ease-out"
+          width="300"
+          height={isClient && showServices ? Math.min((scrollY - window.innerHeight * 0.8) * 0.2, window.innerHeight * 1.5) : 0}
+          className="transition-all duration-300 ease-in-out"
           style={{ overflow: "visible" }}
         >
           <defs>
@@ -119,11 +120,16 @@ export default function ServicesSection() {
             </linearGradient>
           </defs>
           <path
-            d={isClient && showServices ? `M100 0 C180 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.05, window.innerHeight * 0.15)} 40 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.1, window.innerHeight * 0.35)} 20 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.15, window.innerHeight * 0.5)} C0 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.2, window.innerHeight * 0.65)} 200 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.25, window.innerHeight * 0.8)} 180 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.3, window.innerHeight * 1.0)} C160 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.35, window.innerHeight * 1.15)} 120 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.375, window.innerHeight * 1.3)} 100 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.4, window.innerHeight * 1.5)}` : "M100 0 L100 0"}
+            d={isClient && showServices ? `M150 0 C200 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.05, window.innerHeight * 0.15)} 100 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.075, window.innerHeight * 0.22)} 50 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.1, window.innerHeight * 0.3)} C0 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.125, window.innerHeight * 0.37)} 250 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.15, window.innerHeight * 0.45)} 200 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.175, window.innerHeight * 0.52)} C150 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.2, window.innerHeight * 0.6)} 100 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.225, window.innerHeight * 0.67)} 150 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.25, window.innerHeight * 0.75)} C200 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.275, window.innerHeight * 0.82)} 50 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.3, window.innerHeight * 0.9)} 100 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.325, window.innerHeight * 0.97)} C150 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.35, window.innerHeight * 1.05)} 200 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.375, window.innerHeight * 1.12)} 150 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.4, window.innerHeight * 1.2)}` : "M150 0 L150 0"}
             stroke="url(#threadGradient)"
-            strokeWidth="2"
+            strokeWidth="3"
             fill="none"
             className="drop-shadow-sm"
+            style={{
+              strokeDasharray: isClient && showServices ? `${Math.min((scrollY - window.innerHeight * 0.8) * 0.4, window.innerHeight * 1.2)} 2000` : "0 2000",
+              strokeDashoffset: 0,
+              transition: "stroke-dasharray 0.3s ease-in-out"
+            }}
           />
         </svg>
       </div>
@@ -193,13 +199,14 @@ export default function ServicesSection() {
 
                     {/* Minimalistic Card */}
                     <div
-                      className={`relative overflow-hidden rounded-2xl transition-all duration-500 ${
+                      className={`relative overflow-hidden rounded-2xl transition-all duration-500 cursor-none group ${
                         isServiceRevealed(index)
-                          ? "bg-white/5 backdrop-blur-sm border border-white/20 hover:bg-white/10 hover:border-white/30"
+                          ? "bg-white/5 backdrop-blur-sm border border-white/20 hover:bg-white/15 hover:border-white/40 hover:scale-105 hover:shadow-2xl"
                           : "bg-white/5 border border-white/10"
                       }`}
                       style={{
-                        backdropFilter: isServiceRevealed(index) ? 'blur(10px)' : 'blur(0px)'
+                        backdropFilter: isServiceRevealed(index) ? 'blur(10px)' : 'blur(0px)',
+                        transform: isServiceRevealed(index) ? 'perspective(1000px)' : 'none'
                       }}
                     >
                       {/* Subtle gradient overlay */}
@@ -208,22 +215,29 @@ export default function ServicesSection() {
                       {/* Content */}
                       <div className="relative p-8">
                         {/* Service number */}
-                        <div className="text-white/40 font-louis text-lg mb-3 tracking-wider">
+                        <div className="text-white/50 font-louis text-lg mb-3 tracking-wider group-hover:text-white font-semibold transition-all duration-300 group-hover:scale-110">
                           {String(index + 1).padStart(2, '0')}
                         </div>
                         
                         {/* Title */}
-                        <h3 className="text-3xl md:text-4xl font-louis font-light mb-6 text-white group-hover:text-white/90 transition-colors duration-300">
+                        <h3 className="text-3xl md:text-4xl font-louis font-medium mb-6 text-white group-hover:text-white font-bold transition-all duration-300 group-hover:translate-x-2">
                           {service.title}
                         </h3>
                         
                         {/* Description */}
-                        <p className="text-white/70 font-louis leading-relaxed text-2xl group-hover:text-white/80 transition-colors duration-300">
+                        <p className="text-white/80 font-louis leading-relaxed text-2xl group-hover:text-white font-medium transition-all duration-300 group-hover:translate-y-1">
                           {service.description}
                         </p>
                         
-                        {/* Subtle underline on hover */}
-                        <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        {/* Enhanced underline on hover */}
+                        <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-x-110" />
+                        
+                        {/* Floating particles effect */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                          <div className="absolute top-4 right-4 w-1 h-1 bg-white/40 rounded-full animate-pulse" style={{ animationDelay: '0s' }} />
+                          <div className="absolute top-8 right-8 w-1 h-1 bg-white/30 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+                          <div className="absolute bottom-6 left-6 w-1 h-1 bg-white/50 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+                        </div>
                       </div>
                     </div>
                   </div>

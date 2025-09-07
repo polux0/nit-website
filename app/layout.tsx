@@ -3,6 +3,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
+import GlobalCursor from '@/components/global-cursor'
 import './globals.css'
 
 const louisFelligri = localFont({
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${louisFelligri.variable}`}>
         {children}
+        <GlobalCursor />
         <Analytics />
       </body>
     </html>
