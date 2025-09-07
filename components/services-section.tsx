@@ -8,6 +8,7 @@ export default function ServicesSection() {
   const [scrollY, setScrollY] = useState(0)
   const [showServices, setShowServices] = useState(false)
   const [visibleServices, setVisibleServices] = useState<boolean[]>([])
+  const [isClient, setIsClient] = useState(false)
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
 
@@ -65,6 +66,11 @@ export default function ServicesSection() {
     setVisibleServices(new Array(services.length).fill(false))
   }, [])
 
+  // Set client-side flag after hydration
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
   const handleScrollToServices = () => {
     setShowServices(true)
     const servicesElement = document.getElementById("services")
@@ -107,7 +113,7 @@ export default function ServicesSection() {
       <div className="fixed left-1/2 top-0 z-10" style={{ transform: "translateX(-50%)" }}>
         <svg
           width="200"
-          height={showServices && typeof window !== 'undefined' ? Math.min(scrollY * 0.8, window.innerHeight * 1.5) : 0}
+          height={isClient && showServices ? Math.min(scrollY * 0.8, window.innerHeight * 1.5) : 0}
           className="transition-all duration-1000 ease-out"
           style={{ overflow: "visible" }}
         >
@@ -119,7 +125,7 @@ export default function ServicesSection() {
             </linearGradient>
           </defs>
           <path
-            d={typeof window !== 'undefined' ? `M100 0 C180 ${Math.min(scrollY * 0.1, window.innerHeight * 0.15)} 40 ${Math.min(scrollY * 0.2, window.innerHeight * 0.35)} 20 ${Math.min(scrollY * 0.3, window.innerHeight * 0.5)} C0 ${Math.min(scrollY * 0.4, window.innerHeight * 0.65)} 200 ${Math.min(scrollY * 0.5, window.innerHeight * 0.8)} 180 ${Math.min(scrollY * 0.6, window.innerHeight * 1.0)} C160 ${Math.min(scrollY * 0.7, window.innerHeight * 1.15)} 120 ${Math.min(scrollY * 0.75, window.innerHeight * 1.3)} 100 ${Math.min(scrollY * 0.8, window.innerHeight * 1.5)}` : "M100 0 L100 0"}
+            d={isClient ? `M100 0 C180 ${Math.min(scrollY * 0.1, window.innerHeight * 0.15)} 40 ${Math.min(scrollY * 0.2, window.innerHeight * 0.35)} 20 ${Math.min(scrollY * 0.3, window.innerHeight * 0.5)} C0 ${Math.min(scrollY * 0.4, window.innerHeight * 0.65)} 200 ${Math.min(scrollY * 0.5, window.innerHeight * 0.8)} 180 ${Math.min(scrollY * 0.6, window.innerHeight * 1.0)} C160 ${Math.min(scrollY * 0.7, window.innerHeight * 1.15)} 120 ${Math.min(scrollY * 0.75, window.innerHeight * 1.3)} 100 ${Math.min(scrollY * 0.8, window.innerHeight * 1.5)}` : "M100 0 L100 0"}
             stroke="url(#threadGradient)"
             strokeWidth="2"
             fill="none"
