@@ -7,7 +7,8 @@ import { ChevronDown } from "lucide-react"
 export default function ServicesSection() {
   const [scrollY, setScrollY] = useState(0)
   const [showServices, setShowServices] = useState(false)
-  const [visibleServices, setVisibleServices] = useState<boolean[]>([])
+  const [sectionVisible, setSectionVisible] = useState(false)
+  const [threadProgress, setThreadProgress] = useState(0)
   const [isClient, setIsClient] = useState(false)
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -52,8 +53,16 @@ export default function ServicesSection() {
         // Show services when scrolled past about section
         if (window.scrollY > window.innerHeight * 0.8) {
           setShowServices(true)
+          setSectionVisible(true)
+          
+          // Calculate thread progress (0 to 1)
+          const servicesStart = window.innerHeight * 0.8
+          const servicesEnd = servicesStart + window.innerHeight * 1.5
+          const currentProgress = Math.min(Math.max((window.scrollY - servicesStart) / (servicesEnd - servicesStart), 0), 1)
+          setThreadProgress(currentProgress)
         } else {
           setShowServices(false)
+          setThreadProgress(0)
         }
       }
     }
@@ -64,63 +73,20 @@ export default function ServicesSection() {
     }
   }, [])
 
+
+  // Set section as visible on mount to prevent white screen
   useEffect(() => {
-    const updateServiceVisibility = () => {
-      if (!sectionRef.current || !showServices || typeof window === 'undefined') return
+    setSectionVisible(true)
+  }, [])
 
-      const sectionTop = sectionRef.current.offsetTop
-      const threadHeight = Math.min(scrollY * 0.8, window.innerHeight * 1.5)
-      const threadBottomPosition = threadHeight
-
-      const newVisibleServices = serviceRefs.current.map((ref, index) => {
-        if (!ref) return false
-
-        const serviceTop = ref.offsetTop - sectionTop + sectionRef.current!.offsetTop
-        const serviceCenter = serviceTop + ref.offsetHeight / 2
-
-        // Show services when they come into view, with a more lenient threshold
-        return scrollY >= serviceCenter - 300
-      })
-
-      setVisibleServices(newVisibleServices)
-    }
-
-    updateServiceVisibility()
-    if (typeof window !== 'undefined') {
-      window.addEventListener("scroll", updateServiceVisibility)
-      window.addEventListener("resize", updateServiceVisibility)
-
-      return () => {
-        window.removeEventListener("scroll", updateServiceVisibility)
-        window.removeEventListener("resize", updateServiceVisibility)
-      }
-    }
-  }, [scrollY, showServices])
-
-  useEffect(() => {
-    // Animate services with staggered delay when services section is shown
-    console.log('showServices changed:', showServices)
-    if (showServices) {
-      console.log('Starting staggered animation for', services.length, 'services')
-      const newVisibleServices = new Array(services.length).fill(false)
-      setVisibleServices(newVisibleServices)
-      
-      // Stagger the animation - each service appears 200ms after the previous one
-      services.forEach((_, index) => {
-        setTimeout(() => {
-          console.log('Showing service', index)
-          setVisibleServices(prev => {
-            const updated = [...prev]
-            updated[index] = true
-            return updated
-          })
-        }, index * 200)
-      })
-    } else {
-      console.log('Hiding all services')
-      setVisibleServices(new Array(services.length).fill(false))
-    }
-  }, [showServices, services.length])
+  // Function to determine if a service should be revealed based on thread progress
+  const isServiceRevealed = (index: number) => {
+    if (!showServices) return false
+    
+    // Each service reveals when thread reaches a certain progress point
+    const revealThreshold = (index + 1) / services.length
+    return threadProgress >= revealThreshold - 0.05 // Reveal just before thread reaches it
+  }
 
   // Set client-side flag after hydration
   useEffect(() => {
@@ -141,7 +107,7 @@ export default function ServicesSection() {
       <div className="fixed left-1/2 top-0 z-10" style={{ transform: "translateX(-50%)" }}>
         <svg
           width="200"
-          height={isClient && showServices ? Math.min(scrollY * 0.8, window.innerHeight * 1.5) : 0}
+          height={isClient && showServices ? Math.min((scrollY - window.innerHeight * 0.8) * 0.4, window.innerHeight * 1.5) : 0}
           className="transition-all duration-1000 ease-out"
           style={{ overflow: "visible" }}
         >
@@ -153,7 +119,7 @@ export default function ServicesSection() {
             </linearGradient>
           </defs>
           <path
-            d={isClient ? `M100 0 C180 ${Math.min(scrollY * 0.1, window.innerHeight * 0.15)} 40 ${Math.min(scrollY * 0.2, window.innerHeight * 0.35)} 20 ${Math.min(scrollY * 0.3, window.innerHeight * 0.5)} C0 ${Math.min(scrollY * 0.4, window.innerHeight * 0.65)} 200 ${Math.min(scrollY * 0.5, window.innerHeight * 0.8)} 180 ${Math.min(scrollY * 0.6, window.innerHeight * 1.0)} C160 ${Math.min(scrollY * 0.7, window.innerHeight * 1.15)} 120 ${Math.min(scrollY * 0.75, window.innerHeight * 1.3)} 100 ${Math.min(scrollY * 0.8, window.innerHeight * 1.5)}` : "M100 0 L100 0"}
+            d={isClient && showServices ? `M100 0 C180 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.05, window.innerHeight * 0.15)} 40 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.1, window.innerHeight * 0.35)} 20 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.15, window.innerHeight * 0.5)} C0 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.2, window.innerHeight * 0.65)} 200 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.25, window.innerHeight * 0.8)} 180 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.3, window.innerHeight * 1.0)} C160 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.35, window.innerHeight * 1.15)} 120 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.375, window.innerHeight * 1.3)} 100 ${Math.min((scrollY - window.innerHeight * 0.8) * 0.4, window.innerHeight * 1.5)}` : "M100 0 L100 0"}
             stroke="url(#threadGradient)"
             strokeWidth="2"
             fill="none"
@@ -180,7 +146,6 @@ export default function ServicesSection() {
         ref={sectionRef}
         className="relative min-h-screen overflow-hidden"
         style={{ 
-          marginTop: showServices ? "0" : "100vh",
           background: 'linear-gradient(180deg, #a48de2 0%, #6999c0 100%)'
         }}
       >
@@ -204,26 +169,38 @@ export default function ServicesSection() {
               {services.map((service, index) => (
                 <div
                   key={service.title}
-                  ref={(el) => (serviceRefs.current[index] = el)}
+                  ref={(el) => { serviceRefs.current[index] = el }}
                   className={`transform transition-all duration-1000 ease-out ${
-                    visibleServices[index] ? "translate-y-0 opacity-100 scale-100" : "translate-y-12 opacity-0 scale-95"
+                    isServiceRevealed(index) 
+                      ? "translate-y-0 opacity-100 scale-100 rotate-0" 
+                      : "translate-y-16 opacity-0 scale-90 rotate-2"
                   }`}
+                  style={{ 
+                    transitionDelay: isServiceRevealed(index) ? `${index * 150}ms` : '0ms',
+                    filter: isServiceRevealed(index) ? 'blur(0px)' : 'blur(2px)'
+                  }}
                 >
                   <div className="relative group">
                     {/* Thread connection point - minimalistic dot */}
                     <div
                       className={`absolute -left-6 top-8 w-2 h-2 rounded-full transition-all duration-700 ease-out ${
-                        visibleServices[index] ? "bg-white scale-100 shadow-lg" : "bg-white/40 scale-75"
+                        isServiceRevealed(index) ? "bg-white scale-100 shadow-lg" : "bg-white/40 scale-75"
                       }`}
+                      style={{
+                        boxShadow: isServiceRevealed(index) ? '0 0 20px rgba(255,255,255,0.5)' : 'none'
+                      }}
                     />
 
                     {/* Minimalistic Card */}
                     <div
-                      className={`relative overflow-hidden transition-all duration-500 ${
-                        visibleServices[index]
+                      className={`relative overflow-hidden rounded-2xl transition-all duration-500 ${
+                        isServiceRevealed(index)
                           ? "bg-white/5 backdrop-blur-sm border border-white/20 hover:bg-white/10 hover:border-white/30"
                           : "bg-white/5 border border-white/10"
                       }`}
+                      style={{
+                        backdropFilter: isServiceRevealed(index) ? 'blur(10px)' : 'blur(0px)'
+                      }}
                     >
                       {/* Subtle gradient overlay */}
                       <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -241,12 +218,8 @@ export default function ServicesSection() {
                         </h3>
                         
                         {/* Description */}
-                        <p className="text-white/70 font-louis leading-relaxed text-xl group-hover:text-white/80 transition-colors duration-300">
-                          {index === 0 ? (
-                            <span className="text-2xl font-bold">Gradimo identitet koji se pamti. Od logotipa i palete boja do verbalnog identiteta, stvaramo brend koji komunicira suštinu.</span>
-                          ) : (
-                            service.description
-                          )}
+                        <p className="text-white/70 font-louis leading-relaxed text-2xl group-hover:text-white/80 transition-colors duration-300">
+                          {service.description}
                         </p>
                         
                         {/* Subtle underline on hover */}
