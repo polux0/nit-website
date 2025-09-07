@@ -17,9 +17,9 @@ export default function AboutSection() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-louis font-bold text-white mb-8 tracking-tight">O nama</h1>
+          <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-8 tracking-tight">O nama</h1>
 
-          <p className="text-xl md:text-2xl font-louis text-white/90 mb-12 leading-relaxed">
+          <p className="text-2xl md:text-3xl font-louis text-white/90 mb-12 leading-relaxed">
             između tebe i sveta – mi smo ta nit. Pomažemo brendovima da jasno komuniciraju, strateški nastupaju i snažno
             se povezuju sa zajednicom.
           </p>

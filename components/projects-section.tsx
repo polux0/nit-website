@@ -116,8 +116,8 @@ export default function ProjectsSection() {
         <div className="relative z-10 py-20 px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-7xl font-louis font-bold text-white mb-4 tracking-tight leading-tight">Projekti</h2>
-              <p className="text-xl font-louis text-white/80 max-w-2xl mx-auto leading-relaxed">
+              <h2 className="text-6xl md:text-8xl font-louis font-bold text-white mb-4 tracking-tight leading-tight">Projekti</h2>
+              <p className="text-2xl font-louis text-white/80 max-w-2xl mx-auto leading-relaxed">
                 Evo nekih od naših najnovijih radova – svaki projekat je priča o saradnji, kreativnosti i rezultatima.
               </p>
             </div>
@@ -147,8 +147,8 @@ export default function ProjectsSection() {
 
                       {/* Content that appears on hover */}
                       <div className="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <h3 className="text-2xl md:text-3xl font-louis font-bold mb-3 text-white">{project.title}</h3>
-                        <p className="text-white/90 font-louis leading-relaxed text-base mb-4 line-clamp-3">
+                        <h3 className="text-3xl md:text-4xl font-louis font-bold mb-3 text-white">{project.title}</h3>
+                        <p className="text-white/90 font-louis leading-relaxed text-lg mb-4 line-clamp-3">
                           {project.description}
                         </p>
 

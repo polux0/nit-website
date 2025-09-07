@@ -12,6 +12,39 @@ export default function ServicesSection() {
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
 
+  const services = [
+    {
+      title: "Branding",
+      description:
+        "Gradimo identitet koji se pamti. Od logotipa i palete boja do verbalnog identiteta, stvaramo brend koji komunicira suštinu.",
+    },
+    {
+      title: "Strategy",
+      description:
+        "Bez jasno definisane strategije, digitalni nastup je samo šum. Analiziramo tržište, definišemo ciljeve i pravimo jasan plan kuda tvoj brend želi da ide i zašto. Postavljamo temelje za rast koji ima jasno definisan pravac.",
+    },
+    {
+      title: "Social Media",
+      description:
+        "Stvaramo zajednicu. Kreirao strategiju i sadržaj koji angažuje, informiše i povezuje. Vaš nastup na mrežama biće jedinstven, dinamčan i u skladu sa vrednostima brenda.",
+    },
+    {
+      title: "Paid Ads",
+      description:
+        "Investicija u pažnju – isporučena precizno i efikasno. Kampanje koje donose realne rezultate. Optimizujemo budžet i plasiramo oglase tamo gde je vaša publika – na Meta i Google platformama.",
+    },
+    {
+      title: "Content Creation",
+      description:
+        "Proizvodimo visokokvalitetan sadržaj koji privlači, edukuje i konvertuje vašu publiku.",
+    },
+    {
+      title: "Web Development & Maintenance",
+      description:
+        "Pravimo moderne, brze i funkcionalne sajtove koji predstavljaju svaki brend na pravi način. Svaki projekat gradimo uz tehničku preciznost i estetski balans. Nakon lansiranja, tu smo i za redovno održavanje.",
+    },
+  ]
+
   useEffect(() => {
     const handleScroll = () => {
       if (typeof window !== 'undefined') {
@@ -19,6 +52,8 @@ export default function ServicesSection() {
         // Show services when scrolled past about section
         if (window.scrollY > window.innerHeight * 0.8) {
           setShowServices(true)
+        } else {
+          setShowServices(false)
         }
       }
     }
@@ -43,8 +78,8 @@ export default function ServicesSection() {
         const serviceTop = ref.offsetTop - sectionTop + sectionRef.current!.offsetTop
         const serviceCenter = serviceTop + ref.offsetHeight / 2
 
-        // Service is visible when thread has reached its center position
-        return threadBottomPosition >= serviceCenter - 100
+        // Show services when they come into view, with a more lenient threshold
+        return scrollY >= serviceCenter - 300
       })
 
       setVisibleServices(newVisibleServices)
@@ -63,8 +98,29 @@ export default function ServicesSection() {
   }, [scrollY, showServices])
 
   useEffect(() => {
-    setVisibleServices(new Array(services.length).fill(false))
-  }, [])
+    // Animate services with staggered delay when services section is shown
+    console.log('showServices changed:', showServices)
+    if (showServices) {
+      console.log('Starting staggered animation for', services.length, 'services')
+      const newVisibleServices = new Array(services.length).fill(false)
+      setVisibleServices(newVisibleServices)
+      
+      // Stagger the animation - each service appears 200ms after the previous one
+      services.forEach((_, index) => {
+        setTimeout(() => {
+          console.log('Showing service', index)
+          setVisibleServices(prev => {
+            const updated = [...prev]
+            updated[index] = true
+            return updated
+          })
+        }, index * 200)
+      })
+    } else {
+      console.log('Hiding all services')
+      setVisibleServices(new Array(services.length).fill(false))
+    }
+  }, [showServices, services.length])
 
   // Set client-side flag after hydration
   useEffect(() => {
@@ -78,34 +134,6 @@ export default function ServicesSection() {
       servicesElement.scrollIntoView({ behavior: "smooth" })
     }
   }
-
-  const services = [
-    {
-      title: "Branding",
-      description:
-        "Gradimo identitet koji se pamti. Od logotipa i palete boja do verbalnog identiteta, stvaramo brend koji komunicira suštinu.",
-    },
-    {
-      title: "Strategy",
-      description:
-        "Bez jasno definisane strategije, digitalni nastup je samo šum. Analiziramo tržište, definišemo ciljeve i pravimo jasan plan kuda tvoj brend želi da ide i zašto. Postavljamo temelje za rast koji ima jasno definisan pravac.",
-    },
-    {
-      title: "Social Media",
-      description:
-        "Stvaramo zajednicu. Kreirao strategiju i sadržaj koji angažuje, informiše i povezuje. Vaš nastup na mrežama biće jedinstven, dinamčan i u skladu sa vrednostima brenda.",
-    },
-    {
-      title: "Paid Ads",
-      description:
-        "Investicija u pažnju – isporučena precizno i efikasno. Kampanje koje donose realne rezultate. Optimizujemo budžet i plasiramo oglase tamo gde je vaša publika – na Meta i Google platformama.",
-    },
-    {
-      title: "Web Development & Maintenance",
-      description:
-        "Pravimo moderne, brze i funkcionalne sajtove koji predstavljaju svaki brend na pravi način. Svaki projekat gradimo uz tehničku preciznost i estetski balans. Nakon lansiranja, tu smo i za redovno održavanje.",
-    },
-  ]
 
   return (
     <>
@@ -169,7 +197,7 @@ export default function ServicesSection() {
         <div className="relative z-10 py-20 px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-7xl font-louis font-bold text-white mb-8 tracking-tight">Services</h2>
+              <h2 className="text-6xl md:text-8xl font-louis font-bold text-white mb-8 tracking-tight">Services</h2>
             </div>
 
             <div className="space-y-16">
@@ -177,28 +205,53 @@ export default function ServicesSection() {
                 <div
                   key={service.title}
                   ref={(el) => (serviceRefs.current[index] = el)}
-                  className={`transform transition-all duration-700 ease-out ${
-                    visibleServices[index] ? "translate-y-0 opacity-100 scale-100" : "translate-y-20 opacity-0 scale-95"
+                  className={`transform transition-all duration-1000 ease-out ${
+                    visibleServices[index] ? "translate-y-0 opacity-100 scale-100" : "translate-y-12 opacity-0 scale-95"
                   }`}
                 >
-                  <div className="relative">
-                    {/* Thread connection point */}
+                  <div className="relative group">
+                    {/* Thread connection point - minimalistic dot */}
                     <div
-                      className={`absolute -left-8 top-6 w-4 h-4 rounded-full border-2 border-white/30 transition-all duration-500 ${
-                        visibleServices[index] ? "bg-white/60 scale-100 shadow-lg" : "bg-white/20 scale-75"
+                      className={`absolute -left-6 top-8 w-2 h-2 rounded-full transition-all duration-700 ease-out ${
+                        visibleServices[index] ? "bg-white scale-100 shadow-lg" : "bg-white/40 scale-75"
                       }`}
                     />
 
-                    {/* Card */}
+                    {/* Minimalistic Card */}
                     <div
-                      className={`border rounded-lg p-8 transition-all duration-500 ${
+                      className={`relative overflow-hidden transition-all duration-500 ${
                         visibleServices[index]
-                          ? "bg-transparent border-white hover:bg-white/10 shadow-xl"
-                          : "bg-transparent border-white/50"
+                          ? "bg-white/5 backdrop-blur-sm border border-white/20 hover:bg-white/10 hover:border-white/30"
+                          : "bg-white/5 border border-white/10"
                       }`}
                     >
-                      <h3 className="text-2xl md:text-3xl font-louis font-bold mb-4 text-white">{service.title}</h3>
-                      <p className="text-white/90 font-louis leading-relaxed text-lg">{service.description}</p>
+                      {/* Subtle gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      {/* Content */}
+                      <div className="relative p-8">
+                        {/* Service number */}
+                        <div className="text-white/40 font-louis text-lg mb-3 tracking-wider">
+                          {String(index + 1).padStart(2, '0')}
+                        </div>
+                        
+                        {/* Title */}
+                        <h3 className="text-3xl md:text-4xl font-louis font-light mb-6 text-white group-hover:text-white/90 transition-colors duration-300">
+                          {service.title}
+                        </h3>
+                        
+                        {/* Description */}
+                        <p className="text-white/70 font-louis leading-relaxed text-xl group-hover:text-white/80 transition-colors duration-300">
+                          {index === 0 ? (
+                            <span className="text-2xl font-bold">Gradimo identitet koji se pamti. Od logotipa i palete boja do verbalnog identiteta, stvaramo brend koji komunicira suštinu.</span>
+                          ) : (
+                            service.description
+                          )}
+                        </p>
+                        
+                        {/* Subtle underline on hover */}
+                        <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      </div>
                     </div>
                   </div>
                 </div>
