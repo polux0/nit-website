@@ -13,20 +13,24 @@ export default function ServicesSection() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY)
-      // Show services when scrolled past about section
-      if (window.scrollY > window.innerHeight * 0.8) {
-        setShowServices(true)
+      if (typeof window !== 'undefined') {
+        setScrollY(window.scrollY)
+        // Show services when scrolled past about section
+        if (window.scrollY > window.innerHeight * 0.8) {
+          setShowServices(true)
+        }
       }
     }
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    if (typeof window !== 'undefined') {
+      window.addEventListener("scroll", handleScroll)
+      return () => window.removeEventListener("scroll", handleScroll)
+    }
   }, [])
 
   useEffect(() => {
     const updateServiceVisibility = () => {
-      if (!sectionRef.current || !showServices) return
+      if (!sectionRef.current || !showServices || typeof window === 'undefined') return
 
       const sectionTop = sectionRef.current.offsetTop
       const threadHeight = Math.min(scrollY * 0.8, window.innerHeight * 1.5)
@@ -46,12 +50,14 @@ export default function ServicesSection() {
     }
 
     updateServiceVisibility()
-    window.addEventListener("scroll", updateServiceVisibility)
-    window.addEventListener("resize", updateServiceVisibility)
+    if (typeof window !== 'undefined') {
+      window.addEventListener("scroll", updateServiceVisibility)
+      window.addEventListener("resize", updateServiceVisibility)
 
-    return () => {
-      window.removeEventListener("scroll", updateServiceVisibility)
-      window.removeEventListener("resize", updateServiceVisibility)
+      return () => {
+        window.removeEventListener("scroll", updateServiceVisibility)
+        window.removeEventListener("resize", updateServiceVisibility)
+      }
     }
   }, [scrollY, showServices])
 
@@ -101,7 +107,7 @@ export default function ServicesSection() {
       <div className="fixed left-1/2 top-0 z-10" style={{ transform: "translateX(-50%)" }}>
         <svg
           width="200"
-          height={showServices ? Math.min(scrollY * 0.8, window.innerHeight * 1.5) : 0}
+          height={showServices && typeof window !== 'undefined' ? Math.min(scrollY * 0.8, window.innerHeight * 1.5) : 0}
           className="transition-all duration-1000 ease-out"
           style={{ overflow: "visible" }}
         >
@@ -113,7 +119,7 @@ export default function ServicesSection() {
             </linearGradient>
           </defs>
           <path
-            d={`M100 0 C180 ${Math.min(scrollY * 0.1, window.innerHeight * 0.15)} 40 ${Math.min(scrollY * 0.2, window.innerHeight * 0.35)} 20 ${Math.min(scrollY * 0.3, window.innerHeight * 0.5)} C0 ${Math.min(scrollY * 0.4, window.innerHeight * 0.65)} 200 ${Math.min(scrollY * 0.5, window.innerHeight * 0.8)} 180 ${Math.min(scrollY * 0.6, window.innerHeight * 1.0)} C160 ${Math.min(scrollY * 0.7, window.innerHeight * 1.15)} 120 ${Math.min(scrollY * 0.75, window.innerHeight * 1.3)} 100 ${Math.min(scrollY * 0.8, window.innerHeight * 1.5)}`}
+            d={typeof window !== 'undefined' ? `M100 0 C180 ${Math.min(scrollY * 0.1, window.innerHeight * 0.15)} 40 ${Math.min(scrollY * 0.2, window.innerHeight * 0.35)} 20 ${Math.min(scrollY * 0.3, window.innerHeight * 0.5)} C0 ${Math.min(scrollY * 0.4, window.innerHeight * 0.65)} 200 ${Math.min(scrollY * 0.5, window.innerHeight * 0.8)} 180 ${Math.min(scrollY * 0.6, window.innerHeight * 1.0)} C160 ${Math.min(scrollY * 0.7, window.innerHeight * 1.15)} 120 ${Math.min(scrollY * 0.75, window.innerHeight * 1.3)} 100 ${Math.min(scrollY * 0.8, window.innerHeight * 1.5)}` : "M100 0 L100 0"}
             stroke="url(#threadGradient)"
             strokeWidth="2"
             fill="none"
@@ -139,18 +145,19 @@ export default function ServicesSection() {
         id="services"
         ref={sectionRef}
         className="relative min-h-screen overflow-hidden"
-        style={{ marginTop: showServices ? "0" : "100vh" }}
+        style={{ 
+          marginTop: showServices ? "0" : "100vh",
+          background: 'linear-gradient(180deg, #a48de2 0%, #6999c0 100%)'
+        }}
       >
-        {/* Background image matching other sections */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        {/* Noise overlay */}
+        <div 
+          className="absolute inset-0 opacity-10 pointer-events-none"
           style={{
-            backgroundImage: "url('/images/nit-gradient.png')",
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")",
+            backgroundSize: 'cover'
           }}
         />
-
-        {/* Subtle overlay */}
-        <div className="absolute inset-0 bg-black/10" />
 
         {/* Content */}
         <div className="relative z-10 py-20 px-6">
