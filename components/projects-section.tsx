@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react"
-import CompactModal from "./compact-modal"
+import ProjectModal from "./project-modal"
 
 export default function ProjectsSection() {
   const [scrollY, setScrollY] = useState(0)
@@ -276,8 +276,8 @@ export default function ProjectsSection() {
         </div>
       </section>
 
-      {/* Compact Project Modal */}
-      <CompactModal
+      {/* Project Modal - Full Page Experience */}
+      <ProjectModal
         project={selectedProject}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
