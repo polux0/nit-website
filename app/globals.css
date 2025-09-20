@@ -6,6 +6,19 @@
   cursor: none !important;
 }
 
+/* Modal cursor override */
+.modal-content * {
+  cursor: default !important;
+}
+
+.modal-content button {
+  cursor: pointer !important;
+}
+
+.modal-content a {
+  cursor: pointer !important;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

@@ -2,11 +2,14 @@
 
 import { useState, useEffect, useRef } from "react"
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react"
+import CompactModal from "./compact-modal"
 
 export default function ProjectsSection() {
   const [scrollY, setScrollY] = useState(0)
   const [visibleProjects, setVisibleProjects] = useState<boolean[]>([])
   const [currentProject, setCurrentProject] = useState(0)
+  const [selectedProject, setSelectedProject] = useState<any>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const projectRefs = useRef<(HTMLDivElement | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
 
@@ -57,33 +60,85 @@ export default function ProjectsSection() {
   const projects = [
     {
       title: "E-commerce Platform",
-      description: "Moderna platforma za online prodaju sa integrisanim sistemom plaćanja i upravljanjem inventarom.",
-      image: "/modern-ecommerce-interface.png",
-      technologies: ["React", "Node.js", "PostgreSQL", "Stripe"],
+      description: "Moderna platforma za online prodaju sa integrisanim sistemom plaćanja i upravljanjem inventarom. Kreirana sa fokusom na korisničko iskustvo i performanse.",
+      images: [
+        "/modern-ecommerce-interface.png",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg"
+      ],
+      technologies: ["React", "Node.js", "PostgreSQL", "Stripe", "TypeScript", "Tailwind CSS"],
       liveUrl: "#",
       githubUrl: "#",
     },
     {
       title: "Brand Identity System",
-      description: "Kompletna vizuelna identitet za tech startup, uključujući logo, tipografiju i brand guidelines.",
-      image: "/placeholder-t5asa.png",
-      technologies: ["Figma", "Adobe Creative Suite", "Brand Strategy"],
+      description: "Kompletna vizuelna identitet za tech startup, uključujući logo, tipografiju i brand guidelines. Sveobuhvatan pristup brendiranju koji pokriva sve aspekte vizuelne komunikacije.",
+      images: [
+        "/placeholder-t5asa.png",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg"
+      ],
+      technologies: ["Figma", "Adobe Creative Suite", "Brand Strategy", "Illustrator", "Photoshop"],
       liveUrl: "#",
       githubUrl: "#",
     },
     {
       title: "Social Media Dashboard",
-      description: "Analitička platforma za praćenje performansi na društvenim mrežama sa real-time reporting.",
-      image: "/social-media-analytics-dashboard.png",
-      technologies: ["Vue.js", "Python", "MongoDB", "Chart.js"],
+      description: "Analitička platforma za praćenje performansi na društvenim mrežama sa real-time reporting. Omogućava detaljnu analizu i optimizaciju digitalnih kampanja.",
+      images: [
+        "/social-media-analytics-dashboard.png",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg"
+      ],
+      technologies: ["Chart.js", "D3.js", "Express"],
       liveUrl: "#",
       githubUrl: "#",
     },
     {
       title: "Mobile App Design",
-      description: "UX/UI dizajn za fitness aplikaciju sa fokusom na korisničko iskustvo i engagement.",
-      image: "/mobile-fitness-app.png",
-      technologies: ["Figma", "Prototyping", "User Research"],
+      description: "UX/UI dizajn za fitness aplikaciju sa fokusom na korisničko iskustvo i engagement. Kompletna dizajn strategija od wireframe-a do finalnih mockup-ova.",
+      images: [
+        "/mobile-fitness-app.png",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg"
+      ],
+      technologies: ["Figma", "Prototyping", "User Research", "Principle", "Sketch", "InVision"],
       liveUrl: "#",
       githubUrl: "#",
     },
@@ -95,6 +150,16 @@ export default function ProjectsSection() {
 
   const prevProject = () => {
     setCurrentProject((prev) => (prev - 1 + projects.length) % projects.length)
+  }
+
+  const handleProjectClick = (project: any) => {
+    setSelectedProject(project)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedProject(null)
   }
 
   return (
@@ -126,19 +191,22 @@ export default function ProjectsSection() {
               {projects.map((project, index) => (
                 <div
                   key={project.title}
-                  ref={(el) => (projectRefs.current[index] = el)}
+                  ref={(el) => { projectRefs.current[index] = el }}
                   className={`transform transition-all duration-700 ease-out ${
                     visibleProjects[index] ? "translate-y-0 opacity-100 scale-100" : "translate-y-20 opacity-0 scale-95"
                   }`}
                 >
-                  <div className="relative group cursor-pointer">
+                  <div 
+                    className="relative group cursor-pointer"
+                    onClick={() => handleProjectClick(project)}
+                  >
                     {/* Project Card - Image Background */}
                     <div className="relative h-[32rem] rounded-2xl overflow-hidden">
                       {/* Background Image with zoom effect */}
                       <div
                         className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                         style={{
-                          backgroundImage: `url(${project.image || "/placeholder.svg"})`,
+                          backgroundImage: `url(${project.images[0] || "/placeholder.svg"})`,
                         }}
                       />
 
@@ -207,6 +275,13 @@ export default function ProjectsSection() {
           </div>
         </div>
       </section>
+
+      {/* Compact Project Modal */}
+      <CompactModal
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   )
 }

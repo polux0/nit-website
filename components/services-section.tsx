@@ -82,10 +82,10 @@ export default function ServicesSection() {
   // Function to determine if a service should be revealed based on thread progress
   const isServiceRevealed = (index: number) => {
     if (!showServices) return false
-    
+
     // Each service reveals when thread reaches a certain progress point
     const revealThreshold = (index + 1) / services.length
-    return threadProgress >= revealThreshold - 0.05 // Reveal just before thread reaches it
+    return threadProgress >= revealThreshold - 0.15 // Reveal earlier to match thread better
   }
 
   // Set client-side flag after hydration
@@ -176,15 +176,15 @@ export default function ServicesSection() {
                 <div
                   key={service.title}
                   ref={(el) => { serviceRefs.current[index] = el }}
-                  className={`transform transition-all duration-1000 ease-out ${
-                    isServiceRevealed(index) 
-                      ? "translate-y-0 opacity-100 scale-100 rotate-0" 
-                      : "translate-y-16 opacity-0 scale-90 rotate-2"
-                  }`}
-                  style={{ 
-                    transitionDelay: isServiceRevealed(index) ? `${index * 150}ms` : '0ms',
-                    filter: isServiceRevealed(index) ? 'blur(0px)' : 'blur(2px)'
-                  }}
+                          className={`transform transition-all duration-500 ease-out ${
+                            isServiceRevealed(index)
+                              ? "translate-y-0 opacity-100 scale-100 rotate-0"
+                              : "translate-y-16 opacity-0 scale-90 rotate-2"
+                          }`}
+                          style={{
+                            transitionDelay: isServiceRevealed(index) ? `${index * 75}ms` : '0ms',
+                            filter: isServiceRevealed(index) ? 'blur(0px)' : 'blur(2px)'
+                          }}
                 >
                   <div className="relative group">
                     {/* Thread connection point - minimalistic dot */}

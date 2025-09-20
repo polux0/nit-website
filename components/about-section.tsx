@@ -28,6 +28,32 @@ export default function AboutSection() {
     <section className="relative min-h-screen overflow-hidden" style={{
       background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)'
     }}>
+      {/* Top curve */}
+      <div className="absolute top-0 left-0 w-full z-20">
+        <svg viewBox="0 0 1200 120" className="w-full h-20" preserveAspectRatio="none">
+          <path 
+            d="M0,120 C300,80 600,40 900,60 C1050,70 1200,100 1200,120 L1200,0 L0,0 Z" 
+            fill="#6999c0"
+            stroke="white"
+            strokeWidth="2"
+            className="drop-shadow-lg"
+          />
+        </svg>
+      </div>
+
+      {/* Bottom curve */}
+      <div className="absolute bottom-0 left-0 w-full z-20">
+        <svg viewBox="0 0 1200 120" className="w-full h-20" preserveAspectRatio="none">
+          <path 
+            d="M0,0 C300,40 600,80 900,60 C1050,50 1200,20 1200,0 L1200,120 L0,120 Z" 
+            fill="#a48de2"
+            stroke="white"
+            strokeWidth="2"
+            className="drop-shadow-lg"
+          />
+        </svg>
+      </div>
+
       {/* Noise overlay */}
       <div 
         className="absolute inset-0 opacity-10 pointer-events-none"

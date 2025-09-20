@@ -35,7 +35,7 @@ export default function GlobalCursor() {
 
   return (
     <div
-      className="fixed pointer-events-none z-50 transition-all duration-50 ease-out"
+      className="fixed pointer-events-none z-50 transition-all duration-25 ease-out"
       style={{
         left: cursorPosition.x - 10,
         top: cursorPosition.y - 10,
