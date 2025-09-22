@@ -41,6 +41,22 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     }
   }, [isOpen, onClose])
 
+  // Disable body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Disable scrolling
+      document.body.style.overflow = 'hidden'
+    } else {
+      // Re-enable scrolling
+      document.body.style.overflow = 'unset'
+    }
+
+    // Cleanup function to ensure scrolling is re-enabled
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
+
   // Auto-scroll functionality
   useEffect(() => {
     if (!isOpen || isUserInteracting || !project) return
@@ -102,17 +118,17 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
       {/* Page content */}
       <div className="relative w-full h-full flex flex-col">
         {/* Header */}
-        <div className="relative p-4 sm:p-6 pb-2 sm:pb-4">
+        <div className="relative pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-12 px-4 sm:px-6">
           <button
             onClick={onClose}
-            className="absolute top-2 right-2 sm:top-4 sm:right-4 w-8 h-8 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 z-10"
+            className="absolute top-8 right-4 sm:top-12 sm:right-6 w-8 h-8 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 z-10"
           >
             <X className="w-4 h-4" />
           </button>
           
           <button
             onClick={onClose}
-            className="absolute top-2 left-2 sm:top-4 sm:left-4 w-8 h-8 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 z-10"
+            className="absolute top-8 left-4 sm:top-12 sm:left-6 w-8 h-8 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 z-10"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
@@ -128,10 +144,10 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
         </div>
 
         {/* Main content area - Multiple carousels */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 pt-8 sm:pt-12 scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent hover:scrollbar-thumb-white/50">
-          <div className="space-y-8 sm:space-y-12">
+        <div className="flex-1 flex items-center justify-center p-4 sm:p-6">
+          <div className="w-full max-w-7xl">
             {/* Project Gallery - Grid Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
               {/* Carousel 1 - Desktop Views */}
               <div className="space-y-3">
                 <h3 className="text-lg sm:text-xl font-louis font-semibold text-white">Desktop Interface</h3>
@@ -271,62 +287,6 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               </div>
             </div>
 
-            {/* Compact Project Info */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-              {/* Technologies */}
-              <div className="space-y-3">
-                <h3 className="text-base sm:text-lg font-louis font-semibold text-white">Technologies</h3>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {project.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 text-xs bg-white/20 rounded-full text-white border border-white/20 font-louis"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Project Stats */}
-              <div className="space-y-3">
-                <h3 className="text-base sm:text-lg font-louis font-semibold text-white">Project Stats</h3>
-                <div className="space-y-2 text-sm text-white/80 font-louis">
-                  <div>Duration: 3 months</div>
-                  <div>Team: 4 members</div>
-                  <div>Images: {project.images.length}</div>
-                </div>
-              </div>
-
-              {/* Action buttons */}
-              <div className="space-y-3">
-                <h3 className="text-base sm:text-lg font-louis font-semibold text-white">Links</h3>
-                <div className="space-y-2">
-                  <Button
-                    asChild
-                    size="sm"
-                    className="w-full bg-white/20 border border-white/30 text-white hover:bg-white/30 transition-all duration-300 font-louis text-xs sm:text-sm"
-                  >
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-3 h-3 mr-2" />
-                      Live Demo
-                    </a>
-                  </Button>
-                  
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    className="w-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-300 font-louis text-xs sm:text-sm"
-                  >
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github className="w-3 h-3 mr-2" />
-                      Source Code
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
