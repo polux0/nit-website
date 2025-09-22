@@ -23,6 +23,10 @@ interface ProjectModalProps {
 export default function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   const [carouselApis, setCarouselApis] = useState<CarouselApi[]>([])
   const [isUserInteracting, setIsUserInteracting] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  // Debug logging
+  console.log('ProjectModal rendered:', { project, isOpen })
 
   // Handle browser back button
   useEffect(() => {
@@ -105,18 +109,20 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
   if (!project || !isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 w-full h-full overflow-hidden">
-      {/* Full page background with gradient */}
+    <div className="modal-content fixed inset-0 z-[9999] w-full h-full overflow-y-auto bg-gradient-to-b from-[#6999c0] to-[#a48de2]">
+      {/* Full page background with gradient - covers entire scrollable area */}
       <div 
         className="absolute inset-0 w-full h-full"
         style={{
-          background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)'
+          background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)',
+          minHeight: '100vh',
+          height: 'auto'
         }}
       />
       
       
       {/* Page content */}
-      <div className="relative w-full h-full flex flex-col">
+      <div className="relative w-full h-screen flex flex-col">
         {/* Header */}
         <div className="relative pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-12 px-4 sm:px-6">
           <button
@@ -144,151 +150,61 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
         </div>
 
         {/* Main content area - Multiple carousels */}
-        <div className="flex-1 flex items-center justify-center p-4 sm:p-6">
+        <div className="flex-1 flex items-start justify-center pt-8 pb-4 px-4 sm:px-6 min-h-[60vh]">
           <div className="w-full max-w-7xl">
-            {/* Project Gallery - Grid Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-              {/* Carousel 1 - Desktop Views */}
-              <div className="space-y-3">
-                <h3 className="text-lg sm:text-xl font-louis font-semibold text-white">Desktop Interface</h3>
-                <div 
-                  className="relative h-[20rem] sm:h-[24rem] lg:h-[28rem] rounded-xl overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255,255,255,0.2)'
-                  }}
-                >
-                  <Carousel 
-                    className="w-full h-full"
-                    setApi={setCarouselApi(0)}
-                    onSelect={handleCarouselInteraction}
-                  >
-                    <CarouselContent className="h-full">
-                      {project.images.slice(0, 4).map((image, index) => (
-                        <CarouselItem key={index} className="h-full">
-                          <div className="h-full w-full">
-                            <img
-                              src={image}
-                              alt={`${project.title} - Desktop ${index + 1}`}
-                              className="w-full h-full object-cover rounded-lg shadow-lg"
-                            />
-                          </div>
-                        </CarouselItem>
-                      ))}
-                    </CarouselContent>
-                    
-                    {project.images.slice(0, 4).length > 1 && (
-                      <>
-                        <CarouselPrevious 
-                          className="left-2 sm:left-4 bg-white/20 border-white/30 text-white hover:bg-white/30" 
-                          onClick={handleCarouselInteraction}
-                        />
-                        <CarouselNext 
-                          className="right-2 sm:right-4 bg-white/20 border-white/30 text-white hover:bg-white/30"
-                          onClick={handleCarouselInteraction}
-                        />
-                      </>
-                    )}
-                  </Carousel>
-                </div>
-              </div>
-
-              {/* Carousel 2 - Mobile Views */}
-              <div className="space-y-3">
-                <h3 className="text-lg sm:text-xl font-louis font-semibold text-white">Mobile Experience</h3>
-                <div 
-                  className="relative h-[20rem] sm:h-[24rem] lg:h-[28rem] rounded-xl overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255,255,255,0.2)'
-                  }}
-                >
-                  <Carousel 
-                    className="w-full h-full"
-                    setApi={setCarouselApi(1)}
-                    onSelect={handleCarouselInteraction}
-                  >
-                    <CarouselContent className="h-full">
-                      {project.images.slice(4, 8).map((image, index) => (
-                        <CarouselItem key={index} className="h-full">
-                          <div className="h-full w-full">
-                            <img
-                              src={image}
-                              alt={`${project.title} - Mobile ${index + 1}`}
-                              className="w-full h-full object-cover rounded-lg shadow-lg"
-                            />
-                          </div>
-                        </CarouselItem>
-                      ))}
-                    </CarouselContent>
-                    
-                    {project.images.slice(4, 8).length > 1 && (
-                      <>
-                        <CarouselPrevious 
-                          className="left-2 sm:left-4 bg-white/20 border-white/30 text-white hover:bg-white/30"
-                          onClick={handleCarouselInteraction}
-                        />
-                        <CarouselNext 
-                          className="right-2 sm:right-4 bg-white/20 border-white/30 text-white hover:bg-white/30"
-                          onClick={handleCarouselInteraction}
-                        />
-                      </>
-                    )}
-                  </Carousel>
-                </div>
-              </div>
-
-              {/* Carousel 3 - Design Process */}
-              <div className="space-y-3">
-                <h3 className="text-lg sm:text-xl font-louis font-semibold text-white">Design Process</h3>
-                <div 
-                  className="relative h-[20rem] sm:h-[24rem] lg:h-[28rem] rounded-xl overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255,255,255,0.2)'
-                  }}
-                >
-                  <Carousel 
-                    className="w-full h-full"
-                    setApi={setCarouselApi(2)}
-                    onSelect={handleCarouselInteraction}
-                  >
-                    <CarouselContent className="h-full">
-                      {project.images.slice(8, 12).map((image, index) => (
-                        <CarouselItem key={index} className="h-full">
-                          <div className="h-full w-full">
-                            <img
-                              src={image}
-                              alt={`${project.title} - Process ${index + 1}`}
-                              className="w-full h-full object-cover rounded-lg shadow-lg"
-                            />
-                          </div>
-                        </CarouselItem>
-                      ))}
-                    </CarouselContent>
-                    
-                    {project.images.slice(8, 12).length > 1 && (
-                      <>
-                        <CarouselPrevious 
-                          className="left-2 sm:left-4 bg-white/20 border-white/30 text-white hover:bg-white/30"
-                          onClick={handleCarouselInteraction}
-                        />
-                        <CarouselNext 
-                          className="right-2 sm:right-4 bg-white/20 border-white/30 text-white hover:bg-white/30"
-                          onClick={handleCarouselInteraction}
-                        />
-                      </>
-                    )}
-                  </Carousel>
-                </div>
+            {/* Centered Termalna rivijera - Carousel */}
+            <div className="flex flex-col items-center space-y-6">
+              <h3 className="text-2xl sm:text-3xl font-louis font-semibold text-white text-center">Termalna rivijera</h3>
+              <div 
+                className="relative w-full max-w-2xl rounded-xl overflow-hidden"
+                style={{
+                  height: '24rem',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.2)'
+                }}
+              >
+                <Carousel className="w-full h-full">
+                  <CarouselContent className="h-full">
+                    {[
+                      "/projects/Web/termalna-rivijera/1.png",
+                      "/projects/Web/termalna-rivijera/2.png", 
+                      "/projects/Web/termalna-rivijera/3.png",
+                      "/projects/Web/termalna-rivijera/4.png",
+                      "/projects/Web/termalna-rivijera/5.svg",
+                      "/projects/Web/termalna-rivijera/6.svg",
+                      "/projects/Web/termalna-rivijera/7.png",
+                      "/projects/Web/termalna-rivijera/8.png",
+                      "/projects/Web/termalna-rivijera/9.svg",
+                      "/projects/Web/termalna-rivijera/10.png",
+                      "/projects/Web/termalna-rivijera/11.svg"
+                    ].map((image, index) => (
+                      <CarouselItem key={index} className="h-full">
+                        <div className="h-full">
+                          <img
+                            src={image}
+                            alt={`Termalna rivijera ${index + 1}`}
+                            className="w-full h-full object-contain"
+                            style={{ 
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'contain'
+                            }}
+                          />
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/20 border-white/30 text-white hover:bg-white/30" />
+                  <CarouselNext className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/20 border-white/30 text-white hover:bg-white/30" />
+                </Carousel>
               </div>
             </div>
 
+
           </div>
         </div>
+        
       </div>
     </div>
   )

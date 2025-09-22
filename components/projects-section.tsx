@@ -59,29 +59,8 @@ export default function ProjectsSection() {
 
   const projects = [
     {
-      title: "E-commerce Platform",
-      description: "Moderna platforma za online prodaju sa integrisanim sistemom plaćanja i upravljanjem inventarom. Kreirana sa fokusom na korisničko iskustvo i performanse.",
-      images: [
-        "/modern-ecommerce-interface.png",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg"
-      ],
-      technologies: ["React", "Node.js", "PostgreSQL", "Stripe", "TypeScript", "Tailwind CSS"],
-      liveUrl: "#",
-      githubUrl: "#",
-    },
-    {
-      title: "Brand Identity System",
-      description: "Kompletna vizuelna identitet za tech startup, uključujući logo, tipografiju i brand guidelines. Sveobuhvatan pristup brendiranju koji pokriva sve aspekte vizuelne komunikacije.",
+      title: "Branding",
+      description: "Brendovi koje smo gradili - od ideje do prepoznatljivog identiteta.",
       images: [
         "/placeholder-t5asa.png",
         "/placeholder.jpg",
@@ -101,8 +80,8 @@ export default function ProjectsSection() {
       githubUrl: "#",
     },
     {
-      title: "Social Media Dashboard",
-      description: "Analitička platforma za praćenje performansi na društvenim mrežama sa real-time reporting. Omogućava detaljnu analizu i optimizaciju digitalnih kampanja.",
+      title: "Social Media",
+      description: "Kampanje koje angažuju, povezuju i grade zajednice.",
       images: [
         "/social-media-analytics-dashboard.png",
         "/placeholder.jpg",
@@ -122,8 +101,29 @@ export default function ProjectsSection() {
       githubUrl: "#",
     },
     {
-      title: "Mobile App Design",
-      description: "UX/UI dizajn za fitness aplikaciju sa fokusom na korisničko iskustvo i engagement. Kompletna dizajn strategija od wireframe-a do finalnih mockup-ova.",
+      title: "Web",
+      description: "Sajtovi koji spajaju brzinu, funkcionalnost i estetiku.",
+      images: [
+        "/modern-ecommerce-interface.png",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg",
+        "/placeholder.svg",
+        "/placeholder.jpg"
+      ],
+      technologies: ["Stripe", "TypeScript", "Tailwind CSS"],
+      liveUrl: "#",
+      githubUrl: "#",
+    },
+    {
+      title: "Photo & Video",
+      description: "Vizuelni sadržaji koji osnažuju i izdvajaju brend.",
       images: [
         "/mobile-fitness-app.png",
         "/placeholder.jpg",
@@ -224,25 +224,6 @@ export default function ProjectsSection() {
                           ))}
                         </div>
 
-                        {/* Action Buttons */}
-                        <div className="flex gap-3">
-                          <a
-                            href={project.liveUrl}
-                            className="inline-flex items-center gap-2 px-3 py-2 bg-white/20 border border-white/30 rounded-lg text-white hover:bg-white/30 transition-all duration-300 text-sm"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <ExternalLink className="w-3 h-3" />
-                            Live Demo
-                          </a>
-                          <a
-                            href={project.githubUrl}
-                            className="inline-flex items-center gap-2 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white hover:bg-white/20 transition-all duration-300 text-sm"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Github className="w-3 h-3" />
-                            Code
-                          </a>
-                        </div>
                       </div>
                     </div>
                   </div>
