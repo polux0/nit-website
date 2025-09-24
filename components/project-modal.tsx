@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
 import { ExternalLink, Github, X, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getProjectImages } from "@/lib/project-images"
 
 interface Project {
   title: string
@@ -149,12 +150,14 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
           </div>
         </div>
 
-        {/* Main content area - Multiple carousels */}
+        {/* Main content area - Dynamic carousel based on project category */}
         <div className="flex-1 flex items-start justify-center pt-8 pb-4 px-4 sm:px-6 min-h-[60vh]">
           <div className="w-full max-w-7xl">
-            {/* Centered Termalna rivijera - Carousel */}
+            {/* Dynamic carousel based on project category */}
             <div className="flex flex-col items-center space-y-6">
-              <h3 className="text-2xl sm:text-3xl font-louis font-semibold text-white text-center">Termalna rivijera</h3>
+              <h3 className="text-2xl sm:text-3xl font-louis font-semibold text-white text-center">
+                {project.title} Gallery
+              </h3>
               <div 
                 className="relative w-full max-w-2xl rounded-xl overflow-hidden"
                 style={{
@@ -164,26 +167,18 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                   border: '1px solid rgba(255,255,255,0.2)'
                 }}
               >
-                <Carousel className="w-full h-full">
+                <Carousel 
+                  className="w-full h-full"
+                  onMouseEnter={handleCarouselInteraction}
+                  onTouchStart={handleCarouselInteraction}
+                >
                   <CarouselContent className="h-full">
-                    {[
-                      "/projects/Web/termalna-rivijera/1.png",
-                      "/projects/Web/termalna-rivijera/2.png", 
-                      "/projects/Web/termalna-rivijera/3.png",
-                      "/projects/Web/termalna-rivijera/4.png",
-                      "/projects/Web/termalna-rivijera/5.svg",
-                      "/projects/Web/termalna-rivijera/6.svg",
-                      "/projects/Web/termalna-rivijera/7.png",
-                      "/projects/Web/termalna-rivijera/8.png",
-                      "/projects/Web/termalna-rivijera/9.svg",
-                      "/projects/Web/termalna-rivijera/10.png",
-                      "/projects/Web/termalna-rivijera/11.svg"
-                    ].map((image, index) => (
+                    {project.images.map((image, index) => (
                       <CarouselItem key={index} className="h-full">
                         <div className="h-full">
                           <img
                             src={image}
-                            alt={`Termalna rivijera ${index + 1}`}
+                            alt={`${project.title} - Image ${index + 1}`}
                             className="w-full h-full object-contain"
                             style={{ 
                               width: '100%',
@@ -200,8 +195,6 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 </Carousel>
               </div>
             </div>
-
-
           </div>
         </div>
         

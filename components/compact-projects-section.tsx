@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import ProjectGrid from "./project-grid"
+import { getProjectMainImage } from "@/lib/project-images"
 
 export default function CompactProjectsSection() {
   const [scrollY, setScrollY] = useState(0)
@@ -40,66 +41,47 @@ export default function CompactProjectsSection() {
     }
   }, [scrollY])
 
-  // Sample projects data
+  // Sample projects data with dynamic images
   const compactProjects = [
     {
       id: "1",
-      title: "Task Manager Pro",
-      description: "A modern task management app with real-time collaboration features and intuitive design.",
-      image: "/modern-ecommerce-interface.png",
-      technologies: ["React", "TypeScript", "Tailwind", "Firebase"],
+      title: "Branding Projects",
+      description: "Complete brand identity designs including logos, typography, and style guides.",
+      image: getProjectMainImage("Branding"),
+      technologies: ["Figma", "Adobe Creative Suite", "Brand Strategy"],
       liveUrl: "#",
       githubUrl: "#",
-      category: "Web App"
+      category: "Branding"
     },
     {
       id: "2",
-      title: "Portfolio Website",
-      description: "Clean and responsive portfolio website built with modern web technologies.",
-      image: "/placeholder-t5asa.png",
-      technologies: ["Next.js", "Tailwind", "Framer Motion"],
+      title: "Social Media Campaigns",
+      description: "Engaging social media content and campaigns that build communities.",
+      image: getProjectMainImage("Social Media"),
+      technologies: ["Social Strategy", "Content Creation", "Community Management"],
       liveUrl: "#",
       githubUrl: "#",
-      category: "Website"
+      category: "Social Media"
     },
     {
       id: "3",
-      title: "E-commerce Dashboard",
-      description: "Analytics dashboard for e-commerce platforms with detailed reporting and insights.",
-      image: "/social-media-analytics-dashboard.png",
-      technologies: ["Vue.js", "Chart.js", "Node.js", "MongoDB"],
+      title: "Web Development",
+      description: "Modern websites that combine speed, functionality, and aesthetics.",
+      image: getProjectMainImage("Web"),
+      technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
       liveUrl: "#",
       githubUrl: "#",
-      category: "Dashboard"
+      category: "Web"
     },
     {
       id: "4",
-      title: "Mobile Banking App",
-      description: "Secure mobile banking application with modern UI and seamless user experience.",
-      image: "/mobile-fitness-app.png",
-      technologies: ["React Native", "TypeScript", "Redux"],
+      title: "Photo & Video Content",
+      description: "Visual content that empowers and distinguishes your brand.",
+      image: getProjectMainImage("Photo & Video"),
+      technologies: ["Photography", "Video Production", "Post-Production"],
       liveUrl: "#",
       githubUrl: "#",
-      category: "Mobile App"
-    },
-    {
-      id: "5",
-      title: "Social Media Platform",
-      description: "Full-featured social media platform with real-time messaging and content sharing.",
-      image: "/modern-ecommerce-interface.png",
-      technologies: ["React", "Node.js", "PostgreSQL", "Socket.io"],
-      liveUrl: "#",
-      githubUrl: "#",
-      category: "Web App"
-    },
-    {
-      id: "6",
-      title: "Brand Identity Kit",
-      description: "Complete brand identity design including logos, typography, and style guides.",
-      image: "/placeholder-t5asa.png",
-      technologies: ["Figma", "Adobe Creative Suite", "Brand Strategy"],
-      liveUrl: "#",
-      category: "Design"
+      category: "Photo & Video"
     }
   ]
 

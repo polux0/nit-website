@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react"
 import ProjectModal from "./project-modal"
+import { getProjectMainImage, getProjectAllImages } from "@/lib/project-images"
 
 export default function ProjectsSection() {
   const [scrollY, setScrollY] = useState(0)
@@ -61,20 +62,8 @@ export default function ProjectsSection() {
     {
       title: "Branding",
       description: "Brendovi koje smo gradili - od ideje do prepoznatljivog identiteta.",
-      images: [
-        "/placeholder-t5asa.png",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg"
-      ],
+      coverImage: "/placeholder-t5asa.png",
+      images: getProjectAllImages("Branding"),
       technologies: ["Figma", "Adobe Creative Suite", "Brand Strategy", "Illustrator", "Photoshop"],
       liveUrl: "#",
       githubUrl: "#",
@@ -82,20 +71,8 @@ export default function ProjectsSection() {
     {
       title: "Social Media",
       description: "Kampanje koje angažuju, povezuju i grade zajednice.",
-      images: [
-        "/social-media-analytics-dashboard.png",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg"
-      ],
+      coverImage: "/social-media-analytics-dashboard.png",
+      images: getProjectAllImages("Social Media"),
       technologies: ["Chart.js", "D3.js", "Express"],
       liveUrl: "#",
       githubUrl: "#",
@@ -103,20 +80,8 @@ export default function ProjectsSection() {
     {
       title: "Web",
       description: "Sajtovi koji spajaju brzinu, funkcionalnost i estetiku.",
-      images: [
-        "/modern-ecommerce-interface.png",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg"
-      ],
+      coverImage: "/modern-ecommerce-interface.png",
+      images: getProjectAllImages("Web"),
       technologies: ["Stripe", "TypeScript", "Tailwind CSS"],
       liveUrl: "#",
       githubUrl: "#",
@@ -124,20 +89,8 @@ export default function ProjectsSection() {
     {
       title: "Photo & Video",
       description: "Vizuelni sadržaji koji osnažuju i izdvajaju brend.",
-      images: [
-        "/mobile-fitness-app.png",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg",
-        "/placeholder.svg",
-        "/placeholder.jpg"
-      ],
+      coverImage: "/mobile-fitness-app.png",
+      images: getProjectAllImages("Photo & Video"),
       technologies: ["Figma", "Prototyping", "User Research", "Principle", "Sketch", "InVision"],
       liveUrl: "#",
       githubUrl: "#",
@@ -198,7 +151,7 @@ export default function ProjectsSection() {
                       <div
                         className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                         style={{
-                          backgroundImage: `url(${project.images[0] || "/placeholder.svg"})`,
+                          backgroundImage: `url(${project.coverImage || "/placeholder.svg"})`,
                         }}
                       />
 
