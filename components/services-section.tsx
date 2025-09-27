@@ -161,7 +161,7 @@ export default function ServicesSection() {
         <div className="relative z-10 py-20 px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-6xl md:text-8xl font-louis font-bold text-white mb-8 tracking-tight">Services</h2>
+              <h2 className="text-6xl md:text-8xl font-louis font-bold text-white mb-8 tracking-tight">Usluge</h2>
             </div>
 
             <div className="space-y-16">

@@ -126,9 +126,9 @@ export default function ProjectsSection() {
         <div className="relative z-10 py-20 px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-6xl md:text-8xl font-louis font-bold text-white mb-4 tracking-tight leading-tight">Projekti</h2>
+              <h2 className="text-6xl md:text-8xl font-louis font-bold text-white mb-4 tracking-tight leading-tight">Portfolio</h2>
               <p className="text-2xl font-louis text-white/80 max-w-2xl mx-auto leading-relaxed">
-                Evo nekih od naših najnovijih radova – svaki projekat je priča o saradnji, kreativnosti i rezultatima.
+              Prikaz projekata i rezultata koje smo ostvarili
               </p>
             </div>
 

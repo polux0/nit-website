@@ -5743,3 +5743,85 @@ This should eliminate ALL cursor lag! The cursor now operates completely outside
 
 ---
 
+_**User (2025-09-27 10:50Z)**_
+
+Thanks! can we change Services heading in services section to Usluge?
+
+---
+
+_**Assistant (default)**_
+
+Absolutely! Let me change the Services heading to "Usluge" in the services section.
+
+
+---
+
+Tool use: **todo_write**
+
+## Todo List
+
+- [-] Change Services heading to 'Usluge' in services section
+
+---
+
+Tool use: **read_file**
+
+Read file: /home/equinox/Desktop/development/Nit/v0/website/components/services-section.tsx
+
+---
+
+Let me search for the Services heading in the file:
+
+
+---
+
+Tool use: **grep**
+
+---
+
+Perfect! I found the Services heading on line 164. Let me update it to "Usluge":
+
+
+---
+
+Tool use: **search_replace**
+
+
+<details><summary>Edit file: /home/equinox/Desktop/development/Nit/v0/website/components/services-section.tsx</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -162,5 +162,5 @@
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-16">
+-               <h2 className="text-6xl md:text-8xl font-louis font-bold text-white mb-8 tracking-tight">Services</h2>
++               <h2 className="text-6xl md:text-8xl font-louis font-bold text-white mb-8 tracking-tight">Usluge</h2>
+              </div>
+  
+```
+
+</details>
+
+---
+
+Tool use: **todo_write**
+
+## Todo List
+
+- [x] Change Services heading to 'Usluge' in services section
+
+---
+
+Perfect! ✅ **Changed the Services heading to "Usluge"!**
+
+**What I updated:**
+- **File**: `/home/equinox/Desktop/development/Nit/v0/website/components/services-section.tsx`
+- **Line 164**: Changed `Services` to `Usluge`
+- **Result**: The services section now displays "Usluge" as the main heading
+
+The services section heading is now in Serbian as requested! 🎉
+
+---
+
