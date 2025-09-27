@@ -4752,3 +4752,99 @@ If you need any other tweaks or want to add more features in the future, just le
 
 ---
 
+_**User (2025-09-27 10:50Z)**_
+
+Thanks! Can we change the font size on mage page for this element: 
+
+<p class="text-white/90 font-louis leading-relaxed text-lg mb-4 line-clamp-3">Vizuelni sadržaji koji osnažuju i izdvajaju brend.</p>
+
+to monserat medium, just to understand how it looks like?
+
+---
+
+_**Assistant (default)**_
+
+Absolutely! Let me change that specific element to use Montserrat Medium font so you can see how it looks.
+
+
+---
+
+Tool use: **todo_write**
+
+## Todo List
+
+- [-] Change font of specific paragraph to Montserrat Medium for comparison
+
+---
+
+Tool use: **codebase_search**
+
+<details>
+                <summary>Searched codebase "Where is the paragraph with "Vizuelni sadržaji koji osnažuju i izdvajaju brend" text located?" • **6** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `components/services-section.tsx` | L244 |
+| `components/about-section.tsx` | L72 |
+| `components/projects-section.tsx` | L5-212 |
+| `components/about-section.tsx` | L2-72 |
+| `components/project-modal.tsx` | L21-254 |
+| `components/compact-projects-section.tsx` | L4-159 |
+
+</details>
+
+---
+
+I found it! The text "Vizuelni sadržaji koji osnažuju i izdvajaju brend." is in the projects section. Let me update that specific paragraph to use Montserrat Medium:
+
+
+---
+
+Tool use: **search_replace**
+
+
+<details><summary>Edit file: /home/equinox/Desktop/development/Nit/v0/website/components/projects-section.tsx</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -162,5 +162,5 @@
+                        <div className="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <h3 className="text-3xl md:text-4xl font-louis font-bold mb-3 text-white">{project.title}</h3>
+-                         <p className="text-white/90 font-louis leading-relaxed text-lg mb-4 line-clamp-3">
++                         <p className="text-white/90 font-medium leading-relaxed text-lg mb-4 line-clamp-3" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                            {project.description}
+                          </p>
+```
+
+</details>
+
+---
+
+Tool use: **todo_write**
+
+## Todo List
+
+- [x] Change font of specific paragraph to Montserrat Medium for comparison
+
+---
+
+Perfect! ✅ **Changed the font to Montserrat Medium!**
+
+**What I changed:**
+- **Removed**: `font-louis` (your custom Louis font)
+- **Added**: `font-medium` (Tailwind's medium weight)
+- **Added**: `fontFamily: 'Montserrat, sans-serif'` (inline style to ensure Montserrat is used)
+- **Kept**: All other styling (text color, size, spacing, etc.)
+
+**Now you can see:**
+- ✅ **Montserrat Medium** for the project description text
+- ✅ **Same size and styling** - Only the font family changed
+- ✅ **Easy comparison** - You can now compare how Montserrat looks vs Louis font
+- ✅ **Applied to all project cards** - All project descriptions will show in Montserrat Medium
+
+The project description text (like "Vizuelni sadržaji koji osnažuju i izdvajaju brend.") should now display in Montserrat Medium so you can see how it looks compared to your Louis font! 🎉
+
+---
+

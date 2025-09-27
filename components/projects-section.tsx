@@ -161,7 +161,7 @@ export default function ProjectsSection() {
                       {/* Content that appears on hover */}
                       <div className="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <h3 className="text-3xl md:text-4xl font-louis font-bold mb-3 text-white">{project.title}</h3>
-                        <p className="text-white/90 font-louis leading-relaxed text-lg mb-4 line-clamp-3">
+                        <p className="text-white/90 font-medium leading-relaxed text-lg mb-4 line-clamp-3" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                           {project.description}
                         </p>
 
