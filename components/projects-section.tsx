@@ -61,7 +61,7 @@ export default function ProjectsSection() {
   const projects = [
     {
       title: "Branding",
-      description: "Brendovi koje smo gradili - od ideje do prepoznatljivog identiteta.",
+      description: "Brendovi koje smo gradili - od ideje do prepoznatljivog identiteta",
       coverImage: "/placeholder-t5asa.png",
       images: getProjectAllImages("Branding"),
       technologies: ["Figma", "Adobe Creative Suite", "Brand Strategy", "Illustrator", "Photoshop"],
@@ -70,7 +70,7 @@ export default function ProjectsSection() {
     },
     {
       title: "Social Media",
-      description: "Kampanje koje angažuju, povezuju i grade zajednice.",
+      description: "Kampanje koje angažuju, povezuju i grade zajednice",
       coverImage: "/social-media-analytics-dashboard.png",
       images: getProjectAllImages("Social Media"),
       technologies: ["Chart.js", "D3.js", "Express"],
@@ -79,7 +79,7 @@ export default function ProjectsSection() {
     },
     {
       title: "Web",
-      description: "Sajtovi koji spajaju brzinu, funkcionalnost i estetiku.",
+      description: "Sajtovi koji spajaju brzinu, funkcionalnost i estetiku",
       coverImage: "/modern-ecommerce-interface.png",
       images: getProjectAllImages("Web"),
       technologies: ["Stripe", "TypeScript", "Tailwind CSS"],
@@ -88,7 +88,7 @@ export default function ProjectsSection() {
     },
     {
       title: "Photo & Video",
-      description: "Vizuelni sadržaji koji osnažuju i izdvajaju brend.",
+      description: "Vizuelni sadržaji koji osnažuju i izdvajaju brend",
       coverImage: "/mobile-fitness-app.png",
       images: getProjectAllImages("Photo & Video"),
       technologies: ["Figma", "Prototyping", "User Research", "Principle", "Sketch", "InVision"],

@@ -1,47 +1,67 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 export default function GlobalCursor() {
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
-  const [isVisible, setIsVisible] = useState(false)
+  const cursorRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (!cursorRef.current) return
+
+    const cursor = cursorRef.current
+    let isVisible = false
+    let rafId: number
+
+    const updateCursor = (x: number, y: number, visible: boolean) => {
+      if (rafId) cancelAnimationFrame(rafId)
+      
+      rafId = requestAnimationFrame(() => {
+        cursor.style.transform = `translate3d(${x - 10}px, ${y - 10}px, 0)`
+        if (visible !== isVisible) {
+          isVisible = visible
+          cursor.style.opacity = visible ? '1' : '0'
+        }
+      })
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY })
-      setIsVisible(true)
+      updateCursor(e.clientX, e.clientY, true)
     }
 
     const handleMouseLeave = () => {
-      setIsVisible(false)
+      updateCursor(0, 0, false)
     }
 
     const handleMouseEnter = () => {
-      setIsVisible(true)
+      updateCursor(0, 0, true)
     }
 
-    if (typeof window !== 'undefined') {
-      window.addEventListener('mousemove', handleMouseMove)
-      document.addEventListener('mouseleave', handleMouseLeave)
-      document.addEventListener('mouseenter', handleMouseEnter)
-      
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove)
-        document.removeEventListener('mouseleave', handleMouseLeave)
-        document.removeEventListener('mouseenter', handleMouseEnter)
-      }
+    // Set initial styles
+    cursor.style.position = 'fixed'
+    cursor.style.pointerEvents = 'none'
+    cursor.style.zIndex = '50'
+    cursor.style.left = '0'
+    cursor.style.top = '0'
+    cursor.style.opacity = '0'
+    cursor.style.transform = 'translate3d(0, 0, 0)'
+    cursor.style.willChange = 'transform, opacity'
+    cursor.style.transition = 'opacity 0.1s ease-out'
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    document.addEventListener('mouseleave', handleMouseLeave)
+    document.addEventListener('mouseenter', handleMouseEnter)
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseleave', handleMouseLeave)
+      document.removeEventListener('mouseenter', handleMouseEnter)
+      if (rafId) cancelAnimationFrame(rafId)
     }
   }, [])
 
   return (
     <div
-      className="fixed pointer-events-none z-50 transition-all duration-25 ease-out"
-      style={{
-        left: cursorPosition.x - 10,
-        top: cursorPosition.y - 10,
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'scale(1)' : 'scale(0.5)'
-      }}
+      ref={cursorRef}
     >
       <div className="w-5 h-5 bg-white/80 rounded-full shadow-lg" />
     </div>

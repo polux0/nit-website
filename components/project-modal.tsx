@@ -26,9 +26,6 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
   const [isUserInteracting, setIsUserInteracting] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  // Debug logging
-  console.log('ProjectModal rendered:', { project, isOpen })
-
   // Handle browser back button
   useEffect(() => {
     if (!isOpen) return
