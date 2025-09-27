@@ -23,22 +23,22 @@ export function getProjectImages(category: string): ProjectImage[] {
   if (category === 'Web') {
     return [
       {
-        src: '/projects/Web/termalna-rivijera/1.png',
+        src: '/projects/Web/termalna-rivijera/1.svg',
         alt: 'Termalna rivijera - Image 1',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/2.png',
+        src: '/projects/Web/termalna-rivijera/2.svg',
         alt: 'Termalna rivijera - Image 2',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/3.png',
+        src: '/projects/Web/termalna-rivijera/3.svg',
         alt: 'Termalna rivijera - Image 3',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/4.png',
+        src: '/projects/Web/termalna-rivijera/4.svg',
         alt: 'Termalna rivijera - Image 4',
         category: 'Web'
       },
@@ -53,12 +53,12 @@ export function getProjectImages(category: string): ProjectImage[] {
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/7.png',
+        src: '/projects/Web/termalna-rivijera/7.svg',
         alt: 'Termalna rivijera - Image 7',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/8.png',
+        src: '/projects/Web/termalna-rivijera/8.svg',
         alt: 'Termalna rivijera - Image 8',
         category: 'Web'
       },
@@ -68,7 +68,7 @@ export function getProjectImages(category: string): ProjectImage[] {
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/10.png',
+        src: '/projects/Web/termalna-rivijera/10.svg',
         alt: 'Termalna rivijera - Image 10',
         category: 'Web'
       },
@@ -83,6 +83,12 @@ export function getProjectImages(category: string): ProjectImage[] {
   // For Branding category
   if (category === 'Branding') {
     return [
+      {
+        src: '/projects/Branding/papazjanija.mp4',
+        alt: 'Branding - Video 1',
+        category: 'Branding',
+        type: 'video'
+      },
       {
         src: '/projects/Branding/2.svg',
         alt: 'Branding - Design 1',
@@ -124,6 +130,12 @@ export function getProjectImages(category: string): ProjectImage[] {
   // For Social Media category
   if (category === 'Social Media') {
     return [
+      {
+        src: '/projects/Social/termalna-rivijera.mp4',
+        alt: 'Social Media - Video 1',
+        category: 'Social Media',
+        type: 'video'
+      },
       {
         src: '/projects/Social/1.svg',
         alt: 'Social Media - Post 1',
@@ -173,6 +185,6 @@ export function getProjectMainImage(category: string): string {
 }
 
 // Get all images for a project (used in the modal carousel)
-export function getProjectAllImages(category: string): string[] {
-  return getProjectImages(category).map(img => img.src)
+export function getProjectAllImages(category: string): any[] {
+  return getProjectImages(category)
 }
