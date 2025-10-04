@@ -76,6 +76,11 @@ export function getProjectImages(category: string): ProjectImage[] {
         src: '/projects/Web/termalna-rivijera/11.svg',
         alt: 'Termalna rivijera - Image 11',
         category: 'Web'
+      },
+      {
+        src: '/projects/Web/termalna-rivijera/12.svg',
+        alt: 'Termalna rivijera - Image 12',
+        category: 'Web'
       }
     ]
   }

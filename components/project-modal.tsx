@@ -181,7 +181,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                  `${project.title} Gallery`}
               </h3>
               <div 
-                className="relative w-full max-w-2xl rounded-xl overflow-hidden h-[20rem] sm:h-[40rem]"
+                className="relative w-full max-w-2xl rounded-xl overflow-hidden h-[28rem] sm:h-[40rem]"
                 style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
                   backdropFilter: 'blur(10px)',
@@ -200,17 +200,15 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                       const alt = typeof media === 'object' ? media.alt : `${project.title} - Media ${index + 1}`
                       
                       return (
-                        <CarouselItem key={index} className="flex items-center justify-center">
-                          <div className="flex items-center justify-center">
+                        <CarouselItem key={index} className="h-full">
+                          <div className="h-full w-full">
                             {isVideo ? (
                               <video
                                 src={src}
-                                className="max-w-full max-h-full object-contain"
+                                className="w-full h-full object-contain"
                                 style={{ 
-                                  width: 'auto',
-                                  height: 'auto',
-                                  maxWidth: '100%',
-                                  maxHeight: '100%',
+                                  width: '100%',
+                                  height: '100%',
                                   objectFit: 'contain'
                                 }}
                                 autoPlay
@@ -223,12 +221,10 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                               <img
                                 src={src}
                                 alt={alt}
-                                className="max-w-full max-h-full object-contain"
+                                className="w-full h-full object-contain"
                                 style={{ 
-                                  width: 'auto',
-                                  height: 'auto',
-                                  maxWidth: '100%',
-                                  maxHeight: '100%',
+                                  width: '100%',
+                                  height: '100%',
                                   objectFit: 'contain'
                                 }}
                               />
