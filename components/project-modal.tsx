@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
-import { ExternalLink, Github, X, ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react"
+import { ResponsiveCarousel } from "@/components/responsive-carousel"
+import { X, ArrowLeft } from "lucide-react"
 import { getProjectImages } from "@/lib/project-images"
+import { cn } from "@/lib/utils"
 
 interface Project {
   title: string
@@ -22,9 +22,7 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
-  const [carouselApis, setCarouselApis] = useState<CarouselApi[]>([])
   const [isUserInteracting, setIsUserInteracting] = useState(false)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   // Handle browser back button
   useEffect(() => {
@@ -74,50 +72,13 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     }
   }, [isOpen, project])
 
-  // Auto-scroll functionality
-  useEffect(() => {
-    if (!isOpen || isUserInteracting || !project) return
-
-    const interval = setInterval(() => {
-      carouselApis.forEach((api) => {
-        if (api) {
-          const currentIndex = api.selectedScrollSnap()
-          const totalSlides = api.scrollSnapList().length
-          
-          if (totalSlides > 1) {
-            const nextIndex = (currentIndex + 1) % totalSlides
-            api.scrollTo(nextIndex)
-          }
-        }
-      })
-    }, 4000)
-
-    return () => clearInterval(interval)
-  }, [isOpen, isUserInteracting, project])
-
-  // Reset user interaction flag after 5 seconds of no interaction
-  useEffect(() => {
-    if (!isUserInteracting) return
-
-    const timeout = setTimeout(() => {
+  const handleUserInteraction = () => {
+    setIsUserInteracting(true)
+    // Reset after 5 seconds
+    setTimeout(() => {
       setIsUserInteracting(false)
     }, 5000)
-
-    return () => clearTimeout(timeout)
-  }, [isUserInteracting])
-
-  const handleCarouselInteraction = useCallback(() => {
-    setIsUserInteracting(true)
-  }, [])
-
-  const setCarouselApi = useCallback((index: number) => (api: CarouselApi) => {
-    setCarouselApis(prev => {
-      if (prev[index] === api) return prev
-      const newApis = [...prev]
-      newApis[index] = api
-      return newApis
-    })
-  }, [])
+  }
 
   if (!project || !isOpen) return null
 
@@ -159,84 +120,45 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
             <ArrowLeft className="w-4 h-4" />
           </button>
           
-          <div className="text-center pr-12 pl-12">
+          <div className="text-center pr-12 pl-12 mt-8 sm:mt-0">
             <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-4 tracking-tight leading-tight">
               {project.title}
             </h1>
-            <p className="text-2xl font-louis text-white/80 max-w-2xl mx-auto leading-relaxed mb-16 md:mb-10">
+            <p className="text-2xl font-louis text-white/80 max-w-2xl mx-auto leading-relaxed mb-2 md:mb-24">
               {project.description}
             </p>
           </div>
         </div>
 
         {/* Main content area - Dynamic carousel based on project category */}
-        <div className="flex-1 flex items-center justify-center pb-24 px-4 sm:px-6 min-h-[100vh] -mt-24 sm:-mt-8" style={{ cursor: 'none' }}>
+        <div className="flex-1 flex items-center justify-center pb-24 px-4 sm:px-6 min-h-[100vh]" style={{ cursor: 'none' }}>
           <div className="w-full max-w-7xl">
             {/* Dynamic carousel based on project category */}
             <div className="flex flex-col items-center space-y-8">
               <h3 className="text-2xl sm:text-3xl font-louis font-semibold text-white text-center">
-                {project.title === 'Branding' ? 'Papazjanija' : 
+                {project.title === 'Branding' ? 'Papazjanija' :
                  project.title === 'Social Media' ? 'Termalna Rivijera' :
                  project.title === 'Web' ? 'Termalna rivijera' :
                  `${project.title} Gallery`}
               </h3>
-              <div 
-                className="relative w-full max-w-2xl rounded-xl overflow-hidden h-[28rem] sm:h-[40rem]"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255,255,255,0.2)'
-                }}
-              >
-                <Carousel 
-                  className="w-full h-full"
-                  onMouseEnter={handleCarouselInteraction}
-                  onTouchStart={handleCarouselInteraction}
-                >
-                  <CarouselContent className="h-full">
-                    {project.images.map((media, index) => {
-                      const isVideo = typeof media === 'object' && media.type === 'video'
-                      const src = typeof media === 'object' ? media.src : media
-                      const alt = typeof media === 'object' ? media.alt : `${project.title} - Media ${index + 1}`
-                      
-                      return (
-                        <CarouselItem key={index} className="h-full">
-                          <div className="h-full w-full">
-                            {isVideo ? (
-                              <video
-                                src={src}
-                                className="w-full h-full object-contain"
-                                style={{ 
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'contain'
-                                }}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                preload="auto"
-                              />
-                            ) : (
-                              <img
-                                src={src}
-                                alt={alt}
-                                className="w-full h-full object-contain"
-                                style={{ 
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'contain'
-                                }}
-                              />
-                            )}
-                          </div>
-                        </CarouselItem>
-                      )
-                    })}
-                  </CarouselContent>
-                  <CarouselPrevious className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/20 border-white/30 text-white hover:bg-white/30" />
-                  <CarouselNext className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/20 border-white/30 text-white hover:bg-white/30" />
-                </Carousel>
+              <div className="relative w-full max-w-3xl mx-auto">
+                <ResponsiveCarousel
+                  items={project.images.map((media, index) => ({
+                    id: `${project.title}-${index}`,
+                    src: typeof media === 'object' ? media.src : media,
+                    alt: typeof media === 'object' ? media.alt : `${project.title} - Media ${index + 1}`,
+                    type: typeof media === 'object' && media.type === 'video' ? 'video' :
+                          (typeof media === 'object' ? media.src : media).endsWith('.svg') ? 'svg' : 'image'
+                  }))}
+                  autoPlay={!isUserInteracting}
+                  autoPlayInterval={4000}
+                  showDots={true}
+                  showArrows={true}
+                  aspectRatio="square"
+                  objectFit="contain"
+                  onUserInteraction={handleUserInteraction}
+                  className=""
+                />
               </div>
             </div>
           </div>

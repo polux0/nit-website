@@ -20,65 +20,46 @@ export function getProjectImages(category: string): ProjectImage[] {
   if (!folderName) return []
 
   // For Web category, we have a specific subfolder structure
+  // Using square 1080x1080 PNG versions (same aspect ratio as Branding)
   if (category === 'Web') {
     return [
       {
-        src: '/projects/Web/termalna-rivijera/1.svg',
+        src: '/projects/Web/termalna-rivijera/square/1.png',
         alt: 'Termalna rivijera - Image 1',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/2.svg',
+        src: '/projects/Web/termalna-rivijera/square/2.png',
         alt: 'Termalna rivijera - Image 2',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/3.svg',
+        src: '/projects/Web/termalna-rivijera/square/3.png',
         alt: 'Termalna rivijera - Image 3',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/4.svg',
+        src: '/projects/Web/termalna-rivijera/square/4.png',
         alt: 'Termalna rivijera - Image 4',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/5.svg',
-        alt: 'Termalna rivijera - Image 5',
-        category: 'Web'
-      },
-      {
-        src: '/projects/Web/termalna-rivijera/6.svg',
-        alt: 'Termalna rivijera - Image 6',
-        category: 'Web'
-      },
-      {
-        src: '/projects/Web/termalna-rivijera/7.svg',
+        src: '/projects/Web/termalna-rivijera/square/7.png',
         alt: 'Termalna rivijera - Image 7',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/8.svg',
+        src: '/projects/Web/termalna-rivijera/square/8.png',
         alt: 'Termalna rivijera - Image 8',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/9.svg',
-        alt: 'Termalna rivijera - Image 9',
-        category: 'Web'
-      },
-      {
-        src: '/projects/Web/termalna-rivijera/10.svg',
+        src: '/projects/Web/termalna-rivijera/square/10.png',
         alt: 'Termalna rivijera - Image 10',
         category: 'Web'
       },
       {
-        src: '/projects/Web/termalna-rivijera/11.svg',
-        alt: 'Termalna rivijera - Image 11',
-        category: 'Web'
-      },
-      {
-        src: '/projects/Web/termalna-rivijera/12.svg',
+        src: '/projects/Web/termalna-rivijera/square/12.png',
         alt: 'Termalna rivijera - Image 12',
         category: 'Web'
       }
