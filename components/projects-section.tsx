@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react"
 import ProjectModal from "./project-modal"
-import { getProjectMainImage, getProjectAllImages } from "@/lib/project-images"
+import { getProjectMainImage, getProjectAllImages, getPortfolioCardImages } from "@/lib/project-images"
 
 export default function ProjectsSection() {
   const [scrollY, setScrollY] = useState(0)
@@ -58,11 +58,17 @@ export default function ProjectsSection() {
     setVisibleProjects(new Array(projects.length).fill(false))
   }, [])
 
+  const brandingImages = getPortfolioCardImages("Branding")
+  const socialImages = getPortfolioCardImages("Social Media")
+  const webImages = getPortfolioCardImages("Web")
+  const photoVideoImages = getPortfolioCardImages("Photo & Video")
+
   const projects = [
     {
       title: "Branding",
       description: "Brendovi koje smo gradili - od ideje do prepoznatljivog identiteta",
-      coverImage: "/placeholder-t5asa.png",
+      coverImage: brandingImages.black,
+      coverImageHover: brandingImages.white,
       images: getProjectAllImages("Branding"),
       technologies: ["Figma", "Adobe Creative Suite", "Brand Strategy", "Illustrator", "Photoshop"],
       liveUrl: "#",
@@ -71,7 +77,8 @@ export default function ProjectsSection() {
     {
       title: "Social Media",
       description: "Kampanje koje angažuju, povezuju i grade zajednice",
-      coverImage: "/social-media-analytics-dashboard.png",
+      coverImage: socialImages.black,
+      coverImageHover: socialImages.white,
       images: getProjectAllImages("Social Media"),
       technologies: ["Chart.js", "D3.js", "Express"],
       liveUrl: "#",
@@ -80,7 +87,8 @@ export default function ProjectsSection() {
     {
       title: "Web",
       description: "Sajtovi koji spajaju brzinu, funkcionalnost i estetiku",
-      coverImage: "/modern-ecommerce-interface.png",
+      coverImage: webImages.black,
+      coverImageHover: webImages.white,
       images: getProjectAllImages("Web"),
       technologies: ["Stripe", "TypeScript", "Tailwind CSS"],
       liveUrl: "#",
@@ -89,7 +97,8 @@ export default function ProjectsSection() {
     {
       title: "Photo & Video",
       description: "Vizuelni sadržaji koji osnažuju i izdvajaju brend",
-      coverImage: "/mobile-fitness-app.png",
+      coverImage: photoVideoImages.black,
+      coverImageHover: photoVideoImages.white,
       images: getProjectAllImages("Photo & Video"),
       technologies: ["Figma", "Prototyping", "User Research", "Principle", "Sketch", "InVision"],
       liveUrl: "#",
@@ -147,25 +156,32 @@ export default function ProjectsSection() {
                   >
                     {/* Project Card - Image Background */}
                     <div className="relative h-[32rem] rounded-2xl overflow-hidden">
-                      {/* Background Image with zoom effect */}
+                      {/* Black Image (default, fully visible) with zoom effect */}
                       <div
-                        className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        className="absolute inset-0 bg-cover bg-center transition-all duration-500 opacity-100 group-hover:opacity-0 group-hover:scale-110"
                         style={{
                           backgroundImage: `url(${project.coverImage || "/placeholder.svg"})`,
                         }}
                       />
 
+                      {/* White Image (hover) with zoom effect */}
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110"
+                        style={{
+                          backgroundImage: `url(${project.coverImageHover || project.coverImage || "/placeholder.svg"})`,
+                        }}
+                      />
+
                       {/* Overlay that appears on hover */}
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      {/* <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" /> */}
 
                       {/* Content that appears on hover */}
-                      <div className="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {/* <div className="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                         <h3 className="text-3xl md:text-4xl font-louis font-bold mb-3 text-white">{project.title}</h3>
                         <p className="text-white/90 font-medium leading-relaxed text-lg mb-4 line-clamp-3" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                           {project.description}
                         </p>
 
-                        {/* Technologies */}
                         <div className="flex flex-wrap gap-2 mb-4">
                           {project.technologies.slice(0, 3).map((tech) => (
                             <span
@@ -177,7 +193,7 @@ export default function ProjectsSection() {
                           ))}
                         </div>
 
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

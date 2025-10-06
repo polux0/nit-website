@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import ProjectGrid from "./project-grid"
-import { getProjectMainImage } from "@/lib/project-images"
+import { getPortfolioCardImages } from "@/lib/project-images"
 
 export default function CompactProjectsSection() {
   const [scrollY, setScrollY] = useState(0)
@@ -42,12 +42,18 @@ export default function CompactProjectsSection() {
   }, [scrollY])
 
   // Sample projects data with dynamic images
+  const brandingImages = getPortfolioCardImages("Branding")
+  const socialImages = getPortfolioCardImages("Social Media")
+  const webImages = getPortfolioCardImages("Web")
+  const photoVideoImages = getPortfolioCardImages("Photo & Video")
+
   const compactProjects = [
     {
       id: "1",
       title: "Branding Projects",
       description: "Complete brand identity designs including logos, typography, and style guides.",
-      image: getProjectMainImage("Branding"),
+      image: brandingImages.black,
+      imageHover: brandingImages.white,
       technologies: ["Figma", "Adobe Creative Suite", "Brand Strategy"],
       liveUrl: "#",
       githubUrl: "#",
@@ -57,7 +63,8 @@ export default function CompactProjectsSection() {
       id: "2",
       title: "Social Media Campaigns",
       description: "Engaging social media content and campaigns that build communities.",
-      image: getProjectMainImage("Social Media"),
+      image: socialImages.black,
+      imageHover: socialImages.white,
       technologies: ["Social Strategy", "Content Creation", "Community Management"],
       liveUrl: "#",
       githubUrl: "#",
@@ -67,7 +74,8 @@ export default function CompactProjectsSection() {
       id: "3",
       title: "Web Development",
       description: "Modern websites that combine speed, functionality, and aesthetics.",
-      image: getProjectMainImage("Web"),
+      image: webImages.black,
+      imageHover: webImages.white,
       technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
       liveUrl: "#",
       githubUrl: "#",
@@ -77,7 +85,8 @@ export default function CompactProjectsSection() {
       id: "4",
       title: "Photo & Video Content",
       description: "Visual content that empowers and distinguishes your brand.",
-      image: getProjectMainImage("Photo & Video"),
+      image: photoVideoImages.black,
+      imageHover: photoVideoImages.white,
       technologies: ["Photography", "Video Production", "Post-Production"],
       liveUrl: "#",
       githubUrl: "#",

@@ -9,6 +9,7 @@ interface GridProject {
   title: string
   description: string
   image: string
+  imageHover?: string
   technologies: string[]
   liveUrl?: string
   githubUrl?: string
@@ -114,12 +115,21 @@ export default function ProjectGrid({
             >
               {/* Project Image */}
               <div className="relative h-48 overflow-hidden">
+                {/* Black image (default) */}
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:opacity-0 absolute inset-0"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* White image (hover) */}
+                {project.imageHover && (
+                  <img
+                    src={project.imageHover}
+                    alt={`${project.title} hover`}
+                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 opacity-0 group-hover:opacity-100 absolute inset-0"
+                  />
+                )}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
 
                 {/* Hover overlay content */}
                 <div className="absolute inset-0 p-4 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
