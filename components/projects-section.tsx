@@ -158,7 +158,7 @@ export default function ProjectsSection() {
                     <div className="relative h-[32rem] rounded-2xl overflow-hidden">
                       {/* Black Image (default, fully visible) with zoom effect */}
                       <div
-                        className="absolute inset-0 bg-cover bg-center transition-all duration-500 opacity-100 group-hover:opacity-0 group-hover:scale-110"
+                        className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-100 group-hover:opacity-0 group-hover:scale-110"
                         style={{
                           backgroundImage: `url(${project.coverImage || "/placeholder.svg"})`,
                         }}
@@ -166,7 +166,7 @@ export default function ProjectsSection() {
 
                       {/* White Image (hover) with zoom effect */}
                       <div
-                        className="absolute inset-0 bg-cover bg-center transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110"
+                        className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110"
                         style={{
                           backgroundImage: `url(${project.coverImageHover || project.coverImage || "/placeholder.svg"})`,
                         }}
