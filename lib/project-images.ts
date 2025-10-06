@@ -170,6 +170,30 @@ export function getProjectMainImage(category: string): string {
   return images.length > 0 ? images[0].src : '/placeholder.svg'
 }
 
+// Get portfolio card images (black and white versions)
+export function getPortfolioCardImages(category: string): { black: string; white: string } {
+  const portfolioMap: Record<string, { black: string; white: string }> = {
+    'Branding': {
+      black: '/portfolio/portfolio/portfolio_0000_Group%206.jpg',
+      white: '/portfolio/portfolio/portfolio_0001_Group%207.jpg'
+    },
+    'Social Media': {
+      black: '/portfolio/portfolio/portfolio_0002_Group%208.jpg',
+      white: '/portfolio/portfolio/portfolio_0003_Group%209.jpg'
+    },
+    'Web': {
+      black: '/portfolio/portfolio/portfolio_0004_Group%2010.jpg',
+      white: '/portfolio/portfolio/portfolio_0005_Group%2011.jpg'
+    },
+    'Photo & Video': {
+      black: '/portfolio/portfolio/portfolio_0006_Group%2012.jpg',
+      white: '/portfolio/portfolio/portfolio_0007_Group%2013.jpg'
+    }
+  }
+
+  return portfolioMap[category] || { black: '/placeholder.svg', white: '/placeholder.svg' }
+}
+
 // Get all images for a project (used in the modal carousel)
 export function getProjectAllImages(category: string): any[] {
   return getProjectImages(category)
