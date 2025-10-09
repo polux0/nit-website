@@ -218,7 +218,7 @@ export default function ServicesSection() {
                         </h3>
                         
                         {/* Description */}
-                        <p className="text-white/80 font-louis leading-relaxed text-2xl group-hover:text-white font-medium transition-all duration-300 group-hover:translate-y-1">
+                        <p className="text-white/80 leading-relaxed text-xl group-hover:text-white font-light transition-all duration-300 group-hover:translate-y-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                           {service.description}
                         </p>
                         
