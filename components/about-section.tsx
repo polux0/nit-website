@@ -6,7 +6,7 @@ export default function AboutSection() {
   const [displayedText, setDisplayedText] = useState("")
   const [currentIndex, setCurrentIndex] = useState(0)
   
-  const fullText = `između tebe i sveta – mi smo ta Nit. 
+  const fullText = `Između tebe i sveta – mi smo ta Nit. 
   Pomažemo brendovima da jasno komuniciraju, strateški nastupaju i snažno se povezuju sa zajednicom.`
 
   useEffect(() => {
