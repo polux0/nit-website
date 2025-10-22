@@ -6,7 +6,8 @@ export default function AboutSection() {
   const [displayedText, setDisplayedText] = useState("")
   const [currentIndex, setCurrentIndex] = useState(0)
   
-  const fullText = "između tebe i sveta – mi smo ta nit. Pomažemo brendovima da jasno komuniciraju, strateški nastupaju i snažno se povezuju sa zajednicom."
+  const fullText = `između tebe i sveta – mi smo ta nit. 
+  Pomažemo brendovima da jasno komuniciraju, strateški nastupaju i snažno se povezuju sa zajednicom.`
 
   useEffect(() => {
     if (currentIndex < fullText.length) {
@@ -69,7 +70,7 @@ export default function AboutSection() {
               controls
               poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect width='1920' height='1080' fill='%23334155'/%3E%3C/svg%3E"
             >
-              <source src="/videos/hero_section_video.mp4" type="video/mp4" />
+              <source src="/videos/hero_section_video_alternative.mp4" type="video/mp4" />
               <source src="/your-video.webm" type="video/webm" />
               Your browser does not support the video tag.
             </video>
@@ -79,7 +80,10 @@ export default function AboutSection() {
         <div className="max-w-4xl mx-auto lg:mx-0 lg:w-1/2">
           <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-8 tracking-tight">O nama</h1>
 
-          <p className="text-3xl md:text-4xl font-louis text-white/90 mb-12 leading-relaxed min-h-[120px]">
+          <p
+            className="text-3xl md:text-2xl text-white/90 mb-12 leading-relaxed min-h-[120px]"
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
             {displayedText}
             <span className="animate-pulse">|</span>
           </p>
