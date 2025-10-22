@@ -57,8 +57,26 @@ export default function AboutSection() {
       {/* Noise overlay */}
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
-        <div className="max-w-4xl mx-auto">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-16 text-center lg:flex-row lg:items-center lg:gap-16 lg:text-left">
+        <div className="w-full max-w-3xl mx-auto lg:mx-0 lg:w-1/2">
+          <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
+            <video
+              className="h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect width='1920' height='1080' fill='%23334155'/%3E%3C/svg%3E"
+            >
+              <source src="/videos/hero_section_video.mp4" type="video/mp4" />
+              <source src="/your-video.webm" type="video/webm" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto lg:mx-0 lg:w-1/2">
           <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-8 tracking-tight">O nama</h1>
 
           <p className="text-3xl md:text-4xl font-louis text-white/90 mb-12 leading-relaxed min-h-[120px]">
@@ -66,7 +84,6 @@ export default function AboutSection() {
             <span className="animate-pulse">|</span>
           </p>
         </div>
-
       </div>
     </section>
   )
