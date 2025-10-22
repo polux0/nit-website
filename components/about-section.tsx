@@ -26,9 +26,9 @@ export default function AboutSection() {
     setCurrentIndex(0)
   }, [])
   return (
-    <section className="relative min-h-screen overflow-hidden" style={{
-      background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)'
-    }}>
+    <section
+      className="relative min-h-screen overflow-hidden bg-[url('/images/pozadina1.svg')] bg-cover bg-center bg-no-repeat"
+    >
       {/* Top curve */}
       <div className="absolute top-0 left-0 w-full z-20">
         <svg viewBox="0 0 1200 120" className="w-full h-20" preserveAspectRatio="none">

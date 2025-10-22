@@ -150,10 +150,7 @@ export default function ServicesSection() {
       <section
         id="services"
         ref={sectionRef}
-        className="relative min-h-screen overflow-hidden"
-        style={{ 
-          background: 'linear-gradient(180deg, #a48de2 0%, #6999c0 100%)'
-        }}
+        className="relative min-h-screen overflow-hidden bg-[url('/images/pozadina1.svg')] bg-cover bg-center bg-no-repeat"
       >
         {/* Noise overlay */}
 
