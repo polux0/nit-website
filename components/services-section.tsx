@@ -150,17 +150,18 @@ export default function ServicesSection() {
       <section
         id="services"
         ref={sectionRef}
-        className="relative min-h-screen overflow-hidden"
+        className="relative w-full overflow-hidden"
         style={{
-          background: 'linear-gradient(180deg, #a48de2 0%, #6999c0 100%)'
+          background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)',
+          minHeight: '100vh'
         }}
       >
         {/* Grain background overlay */}
         <div
           className="absolute inset-0 opacity-30 pointer-events-none z-0"
           style={{
-            backgroundImage: 'url(/images/background.grain/pozadine_0002_Layer-5-copy-5.png)',
-            backgroundSize: 'auto',
+            backgroundImage: 'url(/images/background.grain/pozadine_0001_Layer-5-copy-6.png)',
+            backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
           }}
