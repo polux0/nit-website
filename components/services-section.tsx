@@ -151,10 +151,21 @@ export default function ServicesSection() {
         id="services"
         ref={sectionRef}
         className="relative min-h-screen overflow-hidden"
-        style={{ 
+        style={{
           background: 'linear-gradient(180deg, #a48de2 0%, #6999c0 100%)'
         }}
       >
+        {/* Grain background overlay */}
+        <div
+          className="absolute inset-0 opacity-30 pointer-events-none z-0"
+          style={{
+            backgroundImage: 'url(/images/background.grain/pozadine_0002_Layer-5-copy-5.png)',
+            backgroundSize: 'auto',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+
         {/* Noise overlay */}
 
         {/* Content */}
@@ -213,7 +224,7 @@ export default function ServicesSection() {
                         </div>
                         
                         {/* Title */}
-                        <h3 className="text-3xl md:text-4xl font-louis font-medium mb-6 text-white group-hover:text-white font-bold transition-all duration-300 group-hover:translate-x-2">
+                        <h3 className="text-4xl md:text-5xl font-louis font-medium mb-6 text-white group-hover:text-white font-bold transition-all duration-300 group-hover:translate-x-2">
                           {service.title}
                         </h3>
                         

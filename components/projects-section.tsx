@@ -130,6 +130,16 @@ export default function ProjectsSection() {
       <section ref={sectionRef} className="relative min-h-screen overflow-hidden" style={{
         background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)'
       }}>
+        {/* Grain background overlay */}
+        <div
+          className="absolute inset-0 opacity-30 pointer-events-none z-0"
+          style={{
+            backgroundImage: 'url(/images/background.grain/pozadine_0004_Layer-5-copy-3.png)',
+            backgroundSize: 'auto',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
 
         {/* Content */}
         <div className="relative z-10 py-20 px-6">
