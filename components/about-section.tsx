@@ -125,19 +125,12 @@ export default function AboutSection() {
 
       {/* Combined Section - 50-50 layout on large screens, text only on mobile */}
       <section className="relative w-full overflow-hidden" style={{
-        background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)',
+        backgroundImage: 'url(/images/background-deploy/1.png)',
+        backgroundSize: '100% 100%',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         minHeight: '100vh'
       }}>
-        {/* Grain background overlay */}
-        <div
-          className="absolute inset-0 opacity-30 pointer-events-none z-0"
-          style={{
-            backgroundImage: 'url(/images/background.grain/pozadine_0006_Layer-5-copy.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        />
 
         {/* Content */}
         <div className="relative z-10 flex flex-col min-h-screen text-center lg:flex-row lg:text-left">

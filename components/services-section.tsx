@@ -152,20 +152,13 @@ export default function ServicesSection() {
         ref={sectionRef}
         className="relative w-full overflow-hidden"
         style={{
-          background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)',
+          backgroundImage: 'url(/images/background-deploy/2.png)',
+          backgroundSize: '100% 100%',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
           minHeight: '100vh'
         }}
       >
-        {/* Grain background overlay */}
-        <div
-          className="absolute inset-0 opacity-30 pointer-events-none z-0"
-          style={{
-            backgroundImage: 'url(/images/background.grain/pozadine_0001_Layer-5-copy-6.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        />
 
         {/* Noise overlay */}
 
@@ -187,8 +180,7 @@ export default function ServicesSection() {
                               : "translate-y-16 opacity-0 scale-90 rotate-2"
                           }`}
                           style={{
-                            transitionDelay: isServiceRevealed(index) ? `${index * 75}ms` : '0ms',
-                            filter: isServiceRevealed(index) ? 'blur(0px)' : 'blur(2px)'
+                            transitionDelay: isServiceRevealed(index) ? `${index * 75}ms` : '0ms'
                           }}
                 >
                   <div className="relative group">
@@ -206,11 +198,10 @@ export default function ServicesSection() {
                     <div
                       className={`relative overflow-hidden rounded-2xl transition-all duration-500 cursor-none group ${
                         isServiceRevealed(index)
-                          ? "bg-white/5 backdrop-blur-sm border border-white/20 hover:bg-white/15 hover:border-white/40 hover:scale-105 hover:shadow-2xl"
+                          ? "bg-white/5 border border-white/20 hover:bg-white/15 hover:border-white/40 hover:scale-105 hover:shadow-2xl"
                           : "bg-white/5 border border-white/10"
                       }`}
                       style={{
-                        backdropFilter: isServiceRevealed(index) ? 'blur(10px)' : 'blur(0px)',
                         transform: isServiceRevealed(index) ? 'perspective(1000px)' : 'none'
                       }}
                     >

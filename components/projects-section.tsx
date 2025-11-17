@@ -128,19 +128,12 @@ export default function ProjectsSection() {
     <>
       {/* Projects Section */}
       <section ref={sectionRef} className="relative w-full overflow-hidden" style={{
-        background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)',
+        backgroundImage: 'url(/images/background-deploy/3.png)',
+        backgroundSize: '100% 100%',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         minHeight: '100vh'
       }}>
-        {/* Grain background overlay */}
-        <div
-          className="absolute inset-0 opacity-30 pointer-events-none z-0"
-          style={{
-            backgroundImage: 'url(/images/background.grain/pozadine_0004_Layer-5-copy-3.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        />
 
         {/* Content */}
         <div className="relative z-10 py-20 px-6">
@@ -167,17 +160,17 @@ export default function ProjectsSection() {
                   >
                     {/* Project Card - Image Background */}
                     <div className="relative h-[32rem] rounded-lg md:rounded-2xl overflow-hidden">
-                      {/* Black Image (default, fully visible) with zoom effect */}
+                      {/* Black Image (default, fully visible) */}
                       <div
-                        className="absolute inset-0 bg-cover md:bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-100 group-hover:opacity-0 group-hover:scale-110"
+                        className="absolute inset-0 bg-cover md:bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-100 group-hover:opacity-0"
                         style={{
                           backgroundImage: `url(${project.coverImage || "/placeholder.svg"})`,
                         }}
                       />
 
-                      {/* White Image (hover) with zoom effect */}
+                      {/* White Image (hover) */}
                       <div
-                        className="absolute inset-0 bg-cover md:bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110"
+                        className="absolute inset-0 bg-cover md:bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-0 group-hover:opacity-100"
                         style={{
                           backgroundImage: `url(${project.coverImageHover || project.coverImage || "/placeholder.svg"})`,
                         }}

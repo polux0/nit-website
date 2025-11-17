@@ -27,19 +27,12 @@ export default function ContactSection() {
 
   return (
     <section className="relative w-full overflow-hidden" style={{
-      background: 'linear-gradient(180deg, #6999c0 0%, #a48de2 100%)',
+      backgroundImage: 'url(/images/background-deploy/4.png)',
+      backgroundSize: '100% 100%',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
       minHeight: '100vh'
     }}>
-      {/* Grain background overlay */}
-      <div
-        className="absolute inset-0 opacity-30 pointer-events-none z-0"
-        style={{
-          backgroundImage: 'url(/images/background.grain/pozadine_0007_Layer-5.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      />
 
       {/* Noise overlay */}
 
