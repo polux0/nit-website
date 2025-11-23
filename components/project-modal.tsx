@@ -114,7 +114,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
             <ArrowLeft className="w-4 h-4" />
           </button>
           
-          <div className="text-center pr-12 pl-12 mt-4 sm:mt-0">
+          <div className="text-center pr-12 pl-12 mt-8 sm:mt-0">
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-louis font-bold text-white mb-3 sm:mb-4 tracking-tight leading-tight">
               {project.title}
             </h1>
@@ -125,7 +125,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
         </div>
 
         {/* Main content area - Dynamic carousel based on project category */}
-        <div className="flex-1 flex items-center justify-center pb-24 px-4 sm:px-6 min-h-[100vh]" style={{ cursor: 'none' }}>
+        <div className="flex-1 flex items-start sm:items-center justify-center pb-12 sm:pb-24 px-4 sm:px-6 pt-4 sm:pt-0" style={{ cursor: 'none' }}>
           <div className="w-full max-w-7xl">
             {/* Dynamic carousel based on project category */}
             <div className="flex flex-col items-center space-y-8">
