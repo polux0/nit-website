@@ -153,7 +153,7 @@ export default function AboutSection() {
           </div>
 
           {/* Text Content */}
-          <div className="w-full max-w-4xl mx-auto lg:mx-0 lg:w-1/2 flex flex-col items-center justify-start px-6 pt-32 pb-12 lg:pt-24 lg:px-12 lg:justify-center text-center h-full">
+          <div className="w-full max-w-4xl mx-auto lg:mx-0 lg:w-1/2 flex flex-col items-center justify-start px-6 pt-20 pb-12 lg:pt-24 lg:px-12 lg:justify-center text-center h-full">
             <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-6 tracking-tight">O nama</h1>
 
             <div
