@@ -99,26 +99,26 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
       {/* Page content */}
       <div className="relative w-full h-screen flex flex-col" style={{ cursor: 'none' }}>
         {/* Header */}
-        <div className="relative pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-12 px-4 sm:px-6">
+        <div className="relative pt-8 sm:pt-20 md:pt-24 pb-8 sm:pb-12 px-4 sm:px-6">
           <button
             onClick={onClose}
-            className="absolute top-8 right-4 sm:top-12 sm:right-6 w-8 h-8 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 z-10"
+            className="absolute top-4 right-4 sm:top-12 sm:right-6 w-8 h-8 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 z-10"
           >
             <X className="w-4 h-4" />
           </button>
           
           <button
             onClick={onClose}
-            className="absolute top-8 left-4 sm:top-12 sm:left-6 w-8 h-8 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 z-10"
+            className="absolute top-4 left-4 sm:top-12 sm:left-6 w-8 h-8 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 z-10"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           
-          <div className="text-center pr-12 pl-12 mt-8 sm:mt-0">
-            <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-4 tracking-tight leading-tight">
+          <div className="text-center pr-12 pl-12 mt-4 sm:mt-0">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-louis font-bold text-white mb-3 sm:mb-4 tracking-tight leading-tight">
               {project.title}
             </h1>
-            <p className="text-2xl font-louis text-white/80 max-w-2xl mx-auto leading-relaxed mb-2 md:mb-24">
+            <p className="text-xl sm:text-2xl font-louis text-white/80 max-w-2xl mx-auto leading-relaxed mb-2 md:mb-24">
               {project.description}
             </p>
           </div>

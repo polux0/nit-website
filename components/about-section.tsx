@@ -124,16 +124,15 @@ export default function AboutSection() {
       </section>
 
       {/* Combined Section - 50-50 layout on large screens, text only on mobile */}
-      <section className="relative w-full overflow-hidden" style={{
+      <section className="relative w-full overflow-hidden h-[600px] lg:h-screen" style={{
         backgroundImage: 'url(/images/background-deploy/1.png)',
         backgroundSize: '100% 100%',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        minHeight: '100vh'
+        backgroundRepeat: 'no-repeat'
       }}>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col min-h-screen text-center lg:flex-row lg:text-left">
+        <div className="relative z-10 flex flex-col text-center lg:flex-row lg:text-left h-full">
           {/* Video - Hidden on mobile, shown on large screens */}
           <div className="hidden lg:block lg:w-1/2 lg:h-screen">
             <video
@@ -154,11 +153,11 @@ export default function AboutSection() {
           </div>
 
           {/* Text Content */}
-          <div className="w-full max-w-4xl mx-auto lg:mx-0 lg:w-1/2 flex flex-col items-center justify-center px-6 py-16 lg:px-12 text-center">
-            <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-8 tracking-tight">O nama</h1>
+          <div className="w-full max-w-4xl mx-auto lg:mx-0 lg:w-1/2 flex flex-col items-center justify-start px-6 pt-32 pb-12 lg:pt-24 lg:px-12 lg:justify-center text-center h-full">
+            <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-6 tracking-tight">O nama</h1>
 
             <div
-              className="text-3xl md:text-2xl text-white/90 mb-12 leading-relaxed min-h-[120px] text-center"
+              className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed text-center"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               {currentIndex <= firstSentence.length ? (
