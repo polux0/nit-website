@@ -84,7 +84,9 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 
   return (
     <div className="modal-content fixed inset-0 z-[9999] w-full h-full overflow-y-auto" style={{
-      background: 'linear-gradient(135deg, #7dd3fc 0%, #a78bfa 50%, #8b5cf6 100%)',
+      backgroundImage: 'url(/images/background-deploy/3.png)',
+      backgroundSize: '100% 100%',
+      backgroundPosition: 'center',
       minHeight: '100vh',
       cursor: 'none !important'
     }}>
@@ -93,14 +95,6 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
           cursor: none !important;
         }
       `}</style>
-      {/* Subtle noise overlay */}
-      <div
-        className="absolute inset-0 opacity-10 pointer-events-none"
-        style={{
-          backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")",
-          backgroundSize: 'cover'
-        }}
-      />
       
       {/* Page content */}
       <div className="relative w-full h-screen flex flex-col" style={{ cursor: 'none' }}>
