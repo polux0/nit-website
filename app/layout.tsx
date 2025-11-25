@@ -3,6 +3,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
+import { Toaster } from 'sonner'
 import GlobalCursor from '@/components/global-cursor'
 import './globals.css'
 
@@ -28,6 +29,13 @@ export default function RootLayout({
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${louisFelligri.variable}`}>
         {children}
         <GlobalCursor />
+        <Toaster 
+          position="top-center" 
+          richColors 
+          expand={true}
+          duration={5000}
+          style={{ zIndex: 9999 }}
+        />
         <Analytics />
       </body>
     </html>

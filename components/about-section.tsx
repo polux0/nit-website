@@ -1,11 +1,15 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
+import { getVideoPoster } from "@/lib/project-images"
 
 export default function AboutSection() {
   const [displayedText, setDisplayedText] = useState("")
   const [currentIndex, setCurrentIndex] = useState(0)
   const [shouldStartAnimation, setShouldStartAnimation] = useState(false)
+  const [desktopVideoLoaded, setDesktopVideoLoaded] = useState(false)
+  const [mobileVideoLoaded, setMobileVideoLoaded] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const mobileVideoRef = useRef<HTMLVideoElement>(null)
   const animationStartedRef = useRef(false)
@@ -106,21 +110,40 @@ export default function AboutSection() {
         />
         
         {/* Video - Full screen height */}
-        <video
-          ref={mobileVideoRef}
-          className="absolute inset-0 w-full h-full object-cover z-10"
-          style={{ height: '100vh' }}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect width='1920' height='1080' fill='%23334155'/%3E%3C/svg%3E"
-        >
-          <source src="/videos/hero_section_video_alternative.mp4" type="video/mp4" />
-          <source src="/videos/hero_section_video_alternative.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div className="absolute inset-0 w-full h-full z-10" style={{ height: '100vh' }}>
+          {/* Poster/Thumbnail - shown while video loads */}
+          {!mobileVideoLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#334155] to-[#1a1f2e]">
+              <img
+                src={getVideoPoster("/videos/hero_section_video_alternative.mp4")}
+                alt="Hero video thumbnail"
+                className="w-full h-full object-cover opacity-90"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none'
+                }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 border-3 border-white/40 border-t-white/90 rounded-full animate-spin" />
+              </div>
+            </div>
+          )}
+          <video
+            ref={mobileVideoRef}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${mobileVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+            style={{ height: '100vh' }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster={getVideoPoster("/videos/hero_section_video_alternative.mp4")}
+            onCanPlay={() => setMobileVideoLoaded(true)}
+            onLoadedData={() => setMobileVideoLoaded(true)}
+          >
+            <source src="/videos/hero_section_video_alternative.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </section>
 
       {/* Combined Section - 50-50 layout on large screens, text only on mobile */}
@@ -133,10 +156,12 @@ export default function AboutSection() {
         {/* Logo - Centered on mobile, Top Right on desktop */}
         <div className="absolute top-20 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:top-8 lg:right-8 z-20">
           <div className="flex flex-col items-center">
+            {/* SVG logo - using img tag as Next.js Image doesn't optimize SVGs */}
             <img 
               src="/images/logos/logo simple off white.svg" 
               alt="NIT Logo" 
               className="w-36 md:w-40 lg:w-40 h-auto mb-1"
+              loading="eager"
             />
             <p className="text-white/90 text-[10px] md:text-xs lg:text-sm tracking-[0.15em] uppercase text-center" style={{ fontFamily: '"Times New Roman", "Times", serif', letterSpacing: '0.15em' }}>
               digital marketing agency
@@ -147,19 +172,36 @@ export default function AboutSection() {
         {/* Content */}
         <div className="relative z-10 flex flex-col text-center lg:flex-row lg:text-left h-full">
           {/* Video - Hidden on mobile, shown on large screens */}
-          <div className="hidden lg:block lg:w-1/2 lg:h-screen">
+          <div className="hidden lg:block lg:w-1/2 lg:h-screen relative">
+            {/* Poster/Thumbnail - shown while video loads */}
+            {!desktopVideoLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#334155] to-[#1a1f2e] z-10">
+                <img
+                  src={getVideoPoster("/videos/hero_section_video_alternative.mp4")}
+                  alt="Hero video thumbnail"
+                  className="w-full h-full object-cover opacity-90"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                  }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 border-3 border-white/40 border-t-white/90 rounded-full animate-spin" />
+                </div>
+              </div>
+            )}
             <video
               ref={videoRef}
-              className="w-full h-full object-cover"
+              className={`w-full h-full object-cover transition-opacity duration-500 ${desktopVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
               style={{ height: '100vh' }}
               autoPlay
               muted
               loop
               playsInline
               preload="auto"
-              poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect width='1920' height='1080' fill='%23334155'/%3E%3C/svg%3E"
+              poster={getVideoPoster("/videos/hero_section_video_alternative.mp4")}
+              onCanPlay={() => setDesktopVideoLoaded(true)}
+              onLoadedData={() => setDesktopVideoLoaded(true)}
             >
-              <source src="/videos/hero_section_video_alternative.mp4" type="video/mp4" />
               <source src="/videos/hero_section_video_alternative.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>

@@ -4,6 +4,21 @@
 
 @import 'tw-animate-css';
 
+/* Ensure toast notifications are visible above everything */
+[data-sonner-toaster] {
+  z-index: 99999 !important;
+}
+
+/* Override Dialog overlay for notification modal to match contact form background */
+.notification-modal-wrapper [data-slot="dialog-overlay"] {
+  background-image: url(/images/background-deploy/4.png) !important;
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+}
+
 /* Global custom cursor */
 * {
   cursor: none !important;

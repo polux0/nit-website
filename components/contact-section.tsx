@@ -3,19 +3,97 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Instagram, Linkedin, Send } from "lucide-react"
+import { Instagram, Linkedin, Send, Loader2, CheckCircle2 } from "lucide-react"
+import NotificationModal from "./notification-modal"
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
+    website: "", // Honeypot field for bot protection
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [notification, setNotification] = useState<{
+    isOpen: boolean
+    type: "success" | "error"
+    title: string
+    message: string
+  }>({
+    isOpen: false,
+    type: "success",
+    title: "",
+    message: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log("Form submitted:", formData)
+    
+    // Bot protection: if honeypot field is filled, it's a bot
+    if (formData.website) {
+      console.log('Bot detected')
+      return
+    }
+
+    setIsSubmitting(true)
+    setIsSuccess(false)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      })
+
+      const data = await response.json()
+      console.log('API Response:', { status: response.status, ok: response.ok, data })
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Došlo je do greške')
+      }
+
+      // Success
+      console.log('Form submitted successfully')
+      setIsSuccess(true)
+      
+      // Show success modal
+      setNotification({
+        isOpen: true,
+        type: "success",
+        title: "Poruka poslata!",
+        message: "Hvala vam na poruci. Odgovorićemo vam uskoro.",
+      })
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+        website: "",
+      })
+
+      // Reset success state after modal closes
+    } catch (error) {
+      console.error('Form submission error:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Došlo je do greške. Molimo pokušajte ponovo.'
+      
+      // Show error modal
+      setNotification({
+        isOpen: true,
+        type: "error",
+        title: "Greška",
+        message: errorMessage,
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -83,27 +161,65 @@ export default function ContactSection() {
                 />
               </div>
 
+              {/* Honeypot field for bot protection - hidden from users */}
+              <input
+                type="text"
+                name="website"
+                value={formData.website}
+                onChange={handleChange}
+                tabIndex={-1}
+                autoComplete="off"
+                style={{
+                  position: 'absolute',
+                  left: '-9999px',
+                  opacity: 0,
+                  pointerEvents: 'none',
+                }}
+                aria-hidden="true"
+              />
+
               {/* CTA Button */}
               <button
                 type="submit"
-                className="w-full py-4 px-8 bg-white/20 border border-white/30 rounded-lg text-white font-louis font-semibold hover:bg-white/30 transition-all duration-300 flex items-center justify-center gap-3 text-xl"
+                disabled={isSubmitting || isSuccess}
+                className="w-full py-4 px-8 bg-white/20 border border-white/30 rounded-lg text-white font-louis font-semibold hover:bg-white/30 transition-all duration-300 flex items-center justify-center gap-3 text-xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send className="w-5 h-5" />
-                Započni nit
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Šalje se...
+                  </>
+                ) : isSuccess ? (
+                  <>
+                    <CheckCircle2 className="w-5 h-5" />
+                    Poslato!
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    Započni nit
+                  </>
+                )}
               </button>
             </form>
 
             {/* Social Media Icons */}
             <div className="flex justify-center gap-6">
               <a
-                href="#"
+                href="https://www.instagram.com/nitdigitalagency?igsh=amk1aGhtc29rbGhr&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-12 h-12 bg-white/20 border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+                aria-label="Visit our Instagram"
               >
                 <Instagram className="w-6 h-6" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/company/nit-advertising/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-12 h-12 bg-white/20 border border-white/30 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300"
+                aria-label="Visit our LinkedIn"
               >
                 <Linkedin className="w-6 h-6" />
               </a>
@@ -111,6 +227,18 @@ export default function ContactSection() {
           </div>
         </div>
       </div>
+
+      {/* Notification Modal */}
+      <NotificationModal
+        isOpen={notification.isOpen}
+        onClose={() => {
+          setNotification({ ...notification, isOpen: false })
+          setIsSuccess(false)
+        }}
+        type={notification.type}
+        title={notification.title}
+        message={notification.message}
+      />
     </section>
   )
 }

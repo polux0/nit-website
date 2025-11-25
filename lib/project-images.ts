@@ -203,3 +203,23 @@ export function getPortfolioCardImages(category: string): { black: string; white
 export function getProjectAllImages(category: string): any[] {
   return getProjectImages(category)
 }
+
+// Get video poster/thumbnail URL for a video source
+export function getVideoPoster(videoSrc: string): string {
+  // Map video sources to their poster images
+  const videoPosterMap: Record<string, string> = {
+    '/videos/hero_section_video_alternative.mp4': '/videos/video.thumbnail.png',
+    '/videos/hero_section_video.mp4': '/videos/video.thumbnail.png',
+    '/projects/Branding/papazjanija.mp4': '/images/video-posters/papazjanija-poster.jpg',
+    '/projects/Social/termalna-rivijera.mp4': '/images/video-posters/termalna-rivijera-poster.jpg',
+  }
+  
+  // Return mapped poster or generate a data URI placeholder
+  return videoPosterMap[videoSrc] || generateVideoPlaceholder()
+}
+
+// Generate a placeholder image for videos without posters
+function generateVideoPlaceholder(): string {
+  // Return a subtle gradient placeholder that matches the site's aesthetic
+  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23334155;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%231a1f2e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1920' height='1080' fill='url(%23grad)'/%3E%3Ccircle cx='960' cy='540' r='60' fill='white' opacity='0.3'/%3E%3Cpath d='M920 500 L960 540 L920 580 Z' fill='white' opacity='0.5'/%3E%3C/svg%3E"
+}
