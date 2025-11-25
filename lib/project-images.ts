@@ -4,6 +4,7 @@ export interface ProjectImage {
   src: string
   alt: string
   category: string
+  type?: 'video' | 'image' | 'svg'
 }
 
 // Map project categories to their corresponding folder paths
@@ -170,28 +171,32 @@ export function getProjectMainImage(category: string): string {
   return images.length > 0 ? images[0].src : '/placeholder.svg'
 }
 
-// Get portfolio card images (black and white versions)
-export function getPortfolioCardImages(category: string): { black: string; white: string } {
-  const portfolioMap: Record<string, { black: string; white: string }> = {
+// Get portfolio card images (black and white versions, with mobile support)
+export function getPortfolioCardImages(category: string): { black: string; white: string; mobile: string } {
+  const portfolioMap: Record<string, { black: string; white: string; mobile: string }> = {
     'Branding': {
       black: '/portfolio/portfolio/portfolio_0000_Group%206.jpg',
-      white: '/portfolio/portfolio/portfolio_0001_Group%207.jpg'
+      white: '/portfolio/portfolio/portfolio_0001_Group%207.jpg',
+      mobile: '/portfolio/portfolio.mobile/examples/branding-example-1200x1500.png'
     },
     'Social Media': {
       black: '/portfolio/portfolio/portfolio_0002_Group%208.jpg',
-      white: '/portfolio/portfolio/portfolio_0003_Group%209.jpg'
+      white: '/portfolio/portfolio/portfolio_0003_Group%209.jpg',
+      mobile: '/portfolio/portfolio.mobile/examples/social-media-example-1200x1500.png'
     },
     'Web': {
       black: '/portfolio/portfolio/portfolio_0004_Group%2010.jpg',
-      white: '/portfolio/portfolio/portfolio_0005_Group%2011.jpg'
+      white: '/portfolio/portfolio/portfolio_0005_Group%2011.jpg',
+      mobile: '/portfolio/portfolio.mobile/examples/web-example-1200x1500.png'
     },
     'Photo & Video': {
       black: '/portfolio/portfolio/portfolio_0006_Group%2012.jpg',
-      white: '/portfolio/portfolio/portfolio_0007_Group%2013.jpg'
+      white: '/portfolio/portfolio/portfolio_0007_Group%2013.jpg',
+      mobile: '/portfolio/portfolio.mobile/examples/photo-video-example-1200x1500.png'
     }
   }
 
-  return portfolioMap[category] || { black: '/placeholder.svg', white: '/placeholder.svg' }
+  return portfolioMap[category] || { black: '/placeholder.svg', white: '/placeholder.svg', mobile: '/placeholder.svg' }
 }
 
 // Get all images for a project (used in the modal carousel)

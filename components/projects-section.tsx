@@ -54,10 +54,6 @@ export default function ProjectsSection() {
     }
   }, [scrollY])
 
-  useEffect(() => {
-    setVisibleProjects(new Array(projects.length).fill(false))
-  }, [])
-
   const brandingImages = getPortfolioCardImages("Branding")
   const socialImages = getPortfolioCardImages("Social Media")
   const webImages = getPortfolioCardImages("Web")
@@ -69,6 +65,7 @@ export default function ProjectsSection() {
       description: "Brendovi koje smo gradili - od ideje do prepoznatljivog identiteta",
       coverImage: brandingImages.black,
       coverImageHover: brandingImages.white,
+      coverImageMobile: brandingImages.mobile,
       images: getProjectAllImages("Branding"),
       technologies: ["Figma", "Adobe Creative Suite", "Brand Strategy", "Illustrator", "Photoshop"],
       liveUrl: "#",
@@ -79,6 +76,7 @@ export default function ProjectsSection() {
       description: "Kampanje koje angažuju, povezuju i grade zajednice",
       coverImage: socialImages.black,
       coverImageHover: socialImages.white,
+      coverImageMobile: socialImages.mobile,
       images: getProjectAllImages("Social Media"),
       technologies: ["Chart.js", "D3.js", "Express"],
       liveUrl: "#",
@@ -89,6 +87,7 @@ export default function ProjectsSection() {
       description: "Sajtovi koji spajaju brzinu, funkcionalnost i estetiku",
       coverImage: webImages.black,
       coverImageHover: webImages.white,
+      coverImageMobile: webImages.mobile,
       images: getProjectAllImages("Web"),
       technologies: ["Stripe", "TypeScript", "Tailwind CSS"],
       liveUrl: "#",
@@ -99,12 +98,17 @@ export default function ProjectsSection() {
       description: "Vizuelni sadržaji koji osnažuju i izdvajaju brend",
       coverImage: photoVideoImages.black,
       coverImageHover: photoVideoImages.white,
+      coverImageMobile: photoVideoImages.mobile,
       images: getProjectAllImages("Photo & Video"),
       technologies: ["Figma", "Prototyping", "User Research", "Principle", "Sketch", "InVision"],
       liveUrl: "#",
       githubUrl: "#",
     },
   ]
+
+  useEffect(() => {
+    setVisibleProjects(new Array(projects.length).fill(false))
+  }, [])
 
   const nextProject = () => {
     setCurrentProject((prev) => (prev + 1) % projects.length)
@@ -160,17 +164,25 @@ export default function ProjectsSection() {
                   >
                     {/* Project Card - Image Background */}
                     <div className="relative h-[32rem] rounded-lg md:rounded-2xl overflow-hidden">
-                      {/* Black Image (default, fully visible) */}
+                      {/* Mobile Image (visible on mobile only - already contains text) */}
                       <div
-                        className="absolute inset-0 bg-cover md:bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-100 group-hover:opacity-0"
+                        className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat transition-all duration-500"
+                        style={{
+                          backgroundImage: `url(${project.coverImageMobile || project.coverImage || "/placeholder.svg"})`,
+                        }}
+                      />
+
+                      {/* Black Image (default, fully visible on desktop) */}
+                      <div
+                        className="absolute inset-0 hidden md:block bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-100 group-hover:opacity-0"
                         style={{
                           backgroundImage: `url(${project.coverImage || "/placeholder.svg"})`,
                         }}
                       />
 
-                      {/* White Image (hover) */}
+                      {/* White Image (hover, desktop only) */}
                       <div
-                        className="absolute inset-0 bg-cover md:bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-0 group-hover:opacity-100"
+                        className="absolute inset-0 hidden md:block bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-0 group-hover:opacity-100"
                         style={{
                           backgroundImage: `url(${project.coverImageHover || project.coverImage || "/placeholder.svg"})`,
                         }}
