@@ -130,6 +130,19 @@ export default function AboutSection() {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
       }}>
+        {/* Logo - Centered on mobile, Top Right on desktop */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:top-8 lg:right-8 z-20">
+          <div className="flex flex-col items-center">
+            <img 
+              src="/images/logos/logo simple off white.svg" 
+              alt="NIT Logo" 
+              className="w-36 md:w-40 lg:w-40 h-auto mb-1"
+            />
+            <p className="text-white/90 text-[10px] md:text-xs lg:text-sm tracking-[0.15em] uppercase text-center" style={{ fontFamily: '"Times New Roman", "Times", serif', letterSpacing: '0.15em' }}>
+              digital marketing agency
+            </p>
+          </div>
+        </div>
 
         {/* Content */}
         <div className="relative z-10 flex flex-col text-center lg:flex-row lg:text-left h-full">
@@ -154,7 +167,7 @@ export default function AboutSection() {
 
           {/* Text Content */}
           <div className="w-full max-w-4xl mx-auto lg:mx-0 lg:w-1/2 flex flex-col items-center justify-start px-6 pt-20 pb-12 lg:pt-24 lg:px-12 lg:justify-center text-center h-full">
-            <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-6 tracking-tight">O nama</h1>
+            <h1 className="text-6xl md:text-8xl font-louis font-bold text-white mb-6 tracking-tight mt-40 md:mt-40 lg:mt-0">O nama</h1>
 
             <div
               className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed text-center"
