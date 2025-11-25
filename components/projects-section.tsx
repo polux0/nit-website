@@ -6,7 +6,6 @@ import ProjectModal from "./project-modal"
 import { getProjectMainImage, getProjectAllImages, getPortfolioCardImages } from "@/lib/project-images"
 
 export default function ProjectsSection() {
-  const [scrollY, setScrollY] = useState(0)
   const [visibleProjects, setVisibleProjects] = useState<boolean[]>([])
   const [currentProject, setCurrentProject] = useState(0)
   const [selectedProject, setSelectedProject] = useState<any>(null)
@@ -15,44 +14,34 @@ export default function ProjectsSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  useEffect(() => {
-    const updateProjectVisibility = () => {
-      if (!sectionRef.current) return
-
-      const sectionTop = sectionRef.current.offsetTop
-      const sectionHeight = sectionRef.current.offsetHeight
-      const viewportHeight = window.innerHeight
-      const scrollProgress = Math.max(0, Math.min(1, (scrollY - sectionTop + viewportHeight * 0.5) / sectionHeight))
-
-      const newVisibleProjects = projectRefs.current.map((ref, index) => {
-        if (!ref) return false
-
-        const projectTop = ref.offsetTop - sectionTop
-        const projectCenter = projectTop + ref.offsetHeight / 2
-
-        return scrollProgress >= projectCenter / sectionHeight
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = projectRefs.current.findIndex(ref => ref === entry.target)
+          if (index !== -1) {
+            setVisibleProjects(prev => {
+              const newVisible = [...prev]
+              newVisible[index] = true
+              return newVisible
+            })
+            // Stop observing once visible to avoid unnecessary updates
+            observer.unobserve(entry.target)
+          }
+        }
       })
+    }, {
+      threshold: 0.1,
+      rootMargin: "0px 0px -10% 0px" // Trigger slightly before element leaves view or enters
+    })
 
-      setVisibleProjects(newVisibleProjects)
-    }
-
-    updateProjectVisibility()
-    window.addEventListener("scroll", updateProjectVisibility)
-    window.addEventListener("resize", updateProjectVisibility)
+    projectRefs.current.forEach(ref => {
+      if (ref) observer.observe(ref)
+    })
 
     return () => {
-      window.removeEventListener("scroll", updateProjectVisibility)
-      window.removeEventListener("resize", updateProjectVisibility)
+      observer.disconnect()
     }
-  }, [scrollY])
+  }, [])
 
   const brandingImages = getPortfolioCardImages("Branding")
   const socialImages = getPortfolioCardImages("Social Media")
@@ -110,6 +99,20 @@ export default function ProjectsSection() {
     setVisibleProjects(new Array(projects.length).fill(false))
   }, [])
 
+  // Preload hover images for smoother transitions
+  useEffect(() => {
+    projects.forEach((project) => {
+      if (project.coverImageHover) {
+        const img = new window.Image()
+        img.src = project.coverImageHover
+      }
+      if (project.coverImage) {
+        const img = new window.Image()
+        img.src = project.coverImage
+      }
+    })
+  }, [projects])
+
   const nextProject = () => {
     setCurrentProject((prev) => (prev + 1) % projects.length)
   }
@@ -161,12 +164,20 @@ export default function ProjectsSection() {
                   <div 
                     className="relative group cursor-pointer"
                     onClick={() => handleProjectClick(project)}
+                    style={{
+                      contain: 'layout style paint',
+                    }}
                   >
                     {/* Project Card - Image Background */}
-                    <div className="relative h-[32rem] rounded-lg md:rounded-2xl overflow-hidden">
+                    <div 
+                      className="relative h-[32rem] rounded-lg md:rounded-2xl overflow-hidden"
+                      style={{
+                        contain: 'layout style paint',
+                      }}
+                    >
                       {/* Mobile Image (visible on mobile only - already contains text) */}
                       <div
-                        className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat transition-all duration-500"
+                        className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
                         style={{
                           backgroundImage: `url(${project.coverImageMobile || project.coverImage || "/placeholder.svg"})`,
                         }}
@@ -174,42 +185,27 @@ export default function ProjectsSection() {
 
                       {/* Black Image (default, fully visible on desktop) */}
                       <div
-                        className="absolute inset-0 hidden md:block bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-100 group-hover:opacity-0"
+                        data-image="black"
+                        className="absolute inset-0 hidden md:block bg-contain bg-center bg-no-repeat transition-opacity duration-200 ease-out opacity-100 group-hover:opacity-0"
                         style={{
                           backgroundImage: `url(${project.coverImage || "/placeholder.svg"})`,
+                          backfaceVisibility: 'hidden',
+                          transform: 'translateZ(0)',
+                          isolation: 'isolate',
                         }}
                       />
 
                       {/* White Image (hover, desktop only) */}
                       <div
-                        className="absolute inset-0 hidden md:block bg-contain bg-center bg-no-repeat transition-all duration-500 opacity-0 group-hover:opacity-100"
+                        data-image="white"
+                        className="absolute inset-0 hidden md:block bg-contain bg-center bg-no-repeat transition-opacity duration-200 ease-out opacity-0 group-hover:opacity-100"
                         style={{
                           backgroundImage: `url(${project.coverImageHover || project.coverImage || "/placeholder.svg"})`,
+                          backfaceVisibility: 'hidden',
+                          transform: 'translateZ(0)',
+                          isolation: 'isolate',
                         }}
                       />
-
-                      {/* Overlay that appears on hover */}
-                      {/* <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" /> */}
-
-                      {/* Content that appears on hover */}
-                      {/* <div className="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                        <h3 className="text-3xl md:text-4xl font-louis font-bold mb-3 text-white">{project.title}</h3>
-                        <p className="text-white/90 font-medium leading-relaxed text-lg mb-4 line-clamp-3" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                          {project.description}
-                        </p>
-
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.technologies.slice(0, 3).map((tech) => (
-                            <span
-                              key={tech}
-                              className="px-2 py-1 text-xs bg-white/20 rounded-full text-white border border-white/20"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-
-                      </div> */}
                     </div>
                   </div>
                 </div>

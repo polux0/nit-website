@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react"
 import { ResponsiveCarousel } from "@/components/responsive-carousel"
 import { X, ArrowLeft } from "lucide-react"
-import { getProjectImages } from "@/lib/project-images"
+import { getProjectImages, type ProjectImage } from "@/lib/project-images"
 import { cn } from "@/lib/utils"
 
 interface Project {
   title: string
   description: string
-  images: string[]
+  images: (string | ProjectImage)[]
   technologies: string[]
   liveUrl: string
   githubUrl: string
@@ -72,6 +72,59 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     }
   }, [isOpen, project])
 
+  // Force cursor: none on all elements in modal
+  useEffect(() => {
+    if (!isOpen) return
+
+    const forceCursorNone = () => {
+      const modalContent = document.querySelector('.modal-content')
+      if (modalContent) {
+        // Get all elements within modal
+        const allElements = modalContent.querySelectorAll('*')
+        allElements.forEach((el) => {
+          const htmlEl = el as HTMLElement
+          if (htmlEl) {
+            htmlEl.style.cursor = 'none'
+          }
+        })
+        // Also set on modal itself
+        const modalEl = modalContent as HTMLElement
+        if (modalEl) {
+          modalEl.style.cursor = 'none'
+        }
+      }
+    }
+
+    // Run immediately and on any DOM changes
+    forceCursorNone()
+    
+    // Use MutationObserver to catch dynamically added elements
+    const observer = new MutationObserver(() => {
+      forceCursorNone()
+    })
+
+    const modalContent = document.querySelector('.modal-content')
+    if (modalContent) {
+      observer.observe(modalContent, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class', 'style'],
+      })
+    }
+
+    // Also run on mouse move to catch any missed elements
+    const handleMouseMove = () => {
+      forceCursorNone()
+    }
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [isOpen])
+
   const handleUserInteraction = () => {
     setIsUserInteracting(true)
     // Reset after 5 seconds
@@ -83,15 +136,47 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
   if (!project || !isOpen) return null
 
   return (
-    <div className="modal-content fixed inset-0 z-[9999] w-full h-full overflow-y-auto" style={{
-      backgroundImage: 'url(/images/background-deploy/3.png)',
-      backgroundSize: '100% 100%',
-      backgroundPosition: 'center',
-      minHeight: '100vh',
-      cursor: 'none !important'
-    }}>
-      <style jsx>{`
-        .modal-content * {
+    <div 
+      className="modal-content fixed inset-0 z-[9999] w-full h-full overflow-y-auto" 
+      style={{
+        backgroundImage: 'url(/images/background-deploy/3.png)',
+        backgroundSize: '100% 100%',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        cursor: 'none',
+      }}
+    >
+      <style jsx global>{`
+        .modal-content,
+        .modal-content *,
+        .modal-content *::before,
+        .modal-content *::after {
+          cursor: none !important;
+        }
+        /* Targeted override for specific elements that might be stubborn */
+        .modal-content button,
+        .modal-content button:hover,
+        .modal-content button:active,
+        .modal-content button:focus,
+        .modal-content a,
+        .modal-content a:hover,
+        .modal-content a:active,
+        .modal-content a:focus,
+        .modal-content [role="button"],
+        .modal-content [role="button"]:hover,
+        .modal-content [role="button"]:active,
+        .modal-content [role="button"]:focus,
+        .modal-content input,
+        .modal-content select,
+        .modal-content textarea,
+        .modal-content [class*="arrow"],
+        .modal-content [class*="arrow"]:hover,
+        .modal-content [class*="dot"],
+        .modal-content [class*="dot"]:hover,
+        .modal-content [data-slot="button"],
+        .modal-content [data-slot="button"]:hover,
+        .modal-content svg,
+        .modal-content svg * {
           cursor: none !important;
         }
       `}</style>

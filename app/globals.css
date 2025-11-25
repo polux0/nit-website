@@ -9,17 +9,49 @@
   cursor: none !important;
 }
 
-/* Modal cursor override */
-.modal-content * {
-  cursor: default !important;
-}
-
-.modal-content button {
-  cursor: pointer !important;
-}
-
-.modal-content a {
-  cursor: pointer !important;
+/* Force custom cursor everywhere, including modals and buttons - with all pseudo-classes */
+.modal-content,
+.modal-content *,
+.modal-content *::before,
+.modal-content *::after,
+.modal-content button,
+.modal-content button:hover,
+.modal-content button:active,
+.modal-content button:focus,
+.modal-content button:focus-visible,
+.modal-content [role="button"],
+.modal-content [role="button"]:hover,
+.modal-content [role="button"]:active,
+.modal-content [role="button"]:focus,
+.modal-content a,
+.modal-content a:hover,
+.modal-content a:active,
+.modal-content a:focus,
+.modal-content [class*="arrow"],
+.modal-content [class*="arrow"]:hover,
+.modal-content [class*="arrow"]:active,
+.modal-content [class*="arrow"]:focus,
+.modal-content [class*="dot"],
+.modal-content [class*="dot"]:hover,
+.modal-content [class*="dot"]:active,
+.modal-content [class*="dot"]:focus,
+.modal-content [class*="carousel"] button,
+.modal-content [class*="carousel"] button:hover,
+.modal-content [class*="carousel"] button:active,
+.modal-content [class*="carousel"] button:focus,
+.modal-content button *,
+.modal-content button *:hover,
+.modal-content [role="button"] *,
+.modal-content [role="button"] *:hover,
+.modal-content a *,
+.modal-content a *:hover,
+.modal-content svg,
+.modal-content svg *,
+.modal-content [data-slot="button"],
+.modal-content [data-slot="button"]:hover,
+.modal-content [data-slot="button"]:active,
+.modal-content [data-slot="button"]:focus {
+  cursor: none !important;
 }
 
 :root {
