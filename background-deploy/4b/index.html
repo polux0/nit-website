@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Sections</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #050810;
+        }
+
+        section {
+            min-height: 100vh;
+            width: 100%;
+            background: center / cover no-repeat var(--bg-image, none);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .content {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content h2 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .content p {
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .section-1 { --bg-image: url('images/001.png'); }
+        .section-2 { --bg-image: url('images/002.png'); }
+        .section-3 { --bg-image: url('images/003.png'); }
+        .section-4 { --bg-image: url('images/004.png'); }
+
+        .section-1,
+        .section-2,
+        .section-3,
+        .section-4 {
+            background-image: var(--bg-image);
+        }
+    </style>
+</head>
+<body>
+    <section class="section-1">
+        <div class="content">
+            <h2>Section 1</h2>
+            <p>This section uses background image 001</p>
+        </div>
+    </section>
+
+    <section class="section-2">
+        <div class="content">
+            <h2>Section 2</h2>
+            <p>This section uses background image 002</p>
+        </div>
+    </section>
+
+    <section class="section-3">
+        <div class="content">
+            <h2>Section 3</h2>
+            <p>This section uses background image 003</p>
+        </div>
+    </section>
+
+    <section class="section-4">
+        <div class="content">
+            <h2>Section 4</h2>
+            <p>This section uses background image 004</p>
+        </div>
+    </section>
+</body>
+</html>
+
